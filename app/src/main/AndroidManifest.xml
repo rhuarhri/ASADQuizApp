@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SetupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".LectureHomeActivity" />
+        <activity android:name=".CreateQuestionActivity" />
+        <activity android:name=".StudentHomeActivity" />
+        <activity android:name=".AnswerQuizActivity"></activity>
     </application>
 
 </manifest>
