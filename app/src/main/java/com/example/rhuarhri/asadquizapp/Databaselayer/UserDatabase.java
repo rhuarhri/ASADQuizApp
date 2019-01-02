@@ -20,11 +20,9 @@ public class UserDatabase implements userDataBaseInterface {
         db = FirebaseFirestore.getInstance();
     }
 
+    @Override
     public boolean checkUser(String name, String password)
     {
-
-
-
 
         CollectionReference citiesRef = db.collection("user");
 
