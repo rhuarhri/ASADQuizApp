@@ -14,5 +14,7 @@ public interface QuestionMangerInterface {
 
     void setQuestionDisplayTime(int Time);
 
+    boolean checkIfAnswerCorrect(String id);
+
     String saveQuestion();
 }

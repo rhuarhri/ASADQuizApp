@@ -1,10 +1,15 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.widget.Toast;
+
+import com.example.rhuarhri.asadquizapp.Databaselayer.QuestionDataBase;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class QuestionManger implements QuestionMangerInterface{
 
+    String QuizName = "";
     String Question = "";
     String AnswerA = "";
     String AnswerB = "";
@@ -15,6 +20,12 @@ public class QuestionManger implements QuestionMangerInterface{
 
     int time = 0;
 
+    QuestionDataBase QuestionDB = new QuestionDataBase();
+
+    QuestionManger(String quizname)
+    {
+        QuizName = quizname;
+    }
 
     @Override
     public void setQuestion(String question) {
@@ -64,51 +75,25 @@ public class QuestionManger implements QuestionMangerInterface{
 
     }
 
+    @Override
+    public boolean checkIfAnswerCorrect(String id) {
+        if(RightAnswer == id)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
     @Override
     public String saveQuestion() {
 
-        String error = "";
+        String error = checkForErrors();
 
-        if(Question == "")
+        if (error != "")
         {
-            error = "No question added";
-            return error;
-        }
-
-        if(AnswerA == "")
-        {
-            error = "No A choice added";
-            return error;
-        }
-
-        if(AnswerB == "")
-        {
-            error = "No B choice added";
-            return error;
-        }
-
-        if(AnswerC == "")
-        {
-            error = "No C choice added";
-            return error;
-        }
-
-        if(AnswerD == "")
-        {
-            error = "No D choice added";
-            return error;
-        }
-
-        if(RightAnswer == "")
-        {
-            error = "No Right answer Selected";
-            return error;
-        }
-
-        if(time == 0)
-        {
-            error = "Question Time not added";
             return error;
         }
 
@@ -123,8 +108,63 @@ public class QuestionManger implements QuestionMangerInterface{
         newQuestion.put("rightAnswer", RightAnswer);
         newQuestion.put("DisplayTime", time);
 
-        //TODO Add map to data base
+
+
+        if(QuestionDB.AddQuestion(QuizName, newQuestion) == true)
+        {
+
+        }
+        else{
+            error = "Failed to add to data base";
+        }
 
         return error;
+    }
+
+    private String checkForErrors()
+    {
+        if(Question == "")
+        {
+            return "No question added";
+
+        }
+
+        if(AnswerA == "")
+        {
+            return "No A choice added";
+
+        }
+
+        if(AnswerB == "")
+        {
+            return "No B choice added";
+
+        }
+
+        if(AnswerC == "")
+        {
+            return "No C choice added";
+
+        }
+
+        if(AnswerD == "")
+        {
+            return "No D choice added";
+
+        }
+
+        if(RightAnswer == "")
+        {
+            return "No Right answer Selected";
+
+        }
+
+        if(time == 0)
+        {
+            return "Question Time not added";
+        }
+
+        //no errors found
+        return "";
     }
 }
