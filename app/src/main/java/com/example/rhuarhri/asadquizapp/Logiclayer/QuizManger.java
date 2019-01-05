@@ -52,7 +52,7 @@ public class QuizManger implements  QuizMangerInterface{
         newQuiz.put("description", description);
 
 
-        if (QuizDB.AddQuiz(newQuiz) == true)
+        if (QuizDB.Add("", newQuiz) == true)
         {
             //successfully added quiz
         }

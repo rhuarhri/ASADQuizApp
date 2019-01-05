@@ -1,11 +1,13 @@
 package com.example.rhuarhri.asadquizapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.UserDatabase;
 
@@ -37,11 +39,12 @@ public class LoginActivity extends AppCompatActivity {
                 boolean result = check.checkUser(userName, password);
                 if(result == true)
                 {
-                    TitleTXT.setText("success");
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    Intent goToLectureHomeScreen = new Intent(getApplicationContext(), LectureHomeActivity.class);
                 }
                 else
                 {
-                    TitleTXT.setText("failed");
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });

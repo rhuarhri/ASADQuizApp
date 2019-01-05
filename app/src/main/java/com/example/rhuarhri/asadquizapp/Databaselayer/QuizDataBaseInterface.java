@@ -4,9 +4,9 @@ import java.util.Map;
 
 public interface QuizDataBaseInterface {
 
-    boolean AddQuiz(Map<String, Object> quiz);
+    //boolean Add(Map<String, Object> quiz);
 
-    boolean AddQuestion(String quizDocumentId, Map<String, Object> question);
+    boolean Add(String quizDocumentId, Map<String, Object> data);
 
     String getQuizDocumentID(boolean newToDataBase, String QuizName);
 

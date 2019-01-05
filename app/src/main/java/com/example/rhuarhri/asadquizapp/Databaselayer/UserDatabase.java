@@ -26,7 +26,7 @@ public class UserDatabase implements userDataBaseInterface {
 
         CollectionReference citiesRef = db.collection("user");
 
-        Query query = citiesRef.whereEqualTo("name", "dave").whereEqualTo("password", "123");
+        Query query = citiesRef.whereEqualTo("name", name ).whereEqualTo("password", password);
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

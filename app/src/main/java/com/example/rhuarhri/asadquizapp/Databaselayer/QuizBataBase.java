@@ -25,11 +25,11 @@ public class QuizBataBase implements QuizDataBaseInterface{
 
 
     @Override
-    public boolean AddQuiz(Map<String, Object> quiz) {
+    public boolean Add(String quizDocumentId, Map<String, Object> data) {
 
         isWorkingWithDataBase = true;
 
-        db.collection("quizzes").add(quiz)
+        db.collection("quizzes").add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -54,11 +54,6 @@ public class QuizBataBase implements QuizDataBaseInterface{
         return DataAddedSuccessfully;
     }
 
-    @Override
-    public boolean AddQuestion(String quizDocumentId, Map<String, Object> question) {
-        //not implemented here
-        return false;
-    }
 
     @Override
     public String getQuizDocumentID(boolean newToDataBase, String QuizName) {

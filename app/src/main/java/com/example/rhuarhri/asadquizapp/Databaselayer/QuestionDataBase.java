@@ -21,17 +21,13 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     }
 
 
-    @Override
-    public boolean AddQuiz(Map<String, Object> quiz) {
-        //not implemented here
-        return false;
-    }
+
 
     @Override
-    public boolean AddQuestion(String quizDocumentId, Map<String, Object> question) {
+    public boolean Add(String quizDocumentId, Map<String, Object> data) {
 
         db.collection("quizzes").document(quizDocumentId)
-                .collection("questions").add(question)
+                .collection("questions").add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

@@ -22,7 +22,7 @@ public class QuestionManger implements QuestionMangerInterface{
 
     QuestionDataBase QuestionDB = new QuestionDataBase();
 
-    QuestionManger(String quizname)
+    public QuestionManger(String quizname)
     {
         QuizName = quizname;
     }
@@ -30,6 +30,11 @@ public class QuestionManger implements QuestionMangerInterface{
     @Override
     public void setQuestion(String question) {
         Question = question;
+    }
+
+    @Override
+    public String getQuestion() {
+        return Question;
     }
 
     @Override
@@ -42,12 +47,22 @@ public class QuestionManger implements QuestionMangerInterface{
     }
 
     @Override
+    public String getAnswerA() {
+        return AnswerA;
+    }
+
+    @Override
     public void setAnswerB(String answer, boolean isRightAnswer) {
         AnswerB = answer;
         if(isRightAnswer == true)
         {
             RightAnswer = "B";
         }
+    }
+
+    @Override
+    public String getAnswerB() {
+        return AnswerB;
     }
 
     @Override
@@ -60,6 +75,11 @@ public class QuestionManger implements QuestionMangerInterface{
     }
 
     @Override
+    public String getAnswerC() {
+        return AnswerC;
+    }
+
+    @Override
     public void setAnswerD(String answer, boolean isRightAnswer) {
         AnswerD = answer;
         if(isRightAnswer == true)
@@ -69,10 +89,20 @@ public class QuestionManger implements QuestionMangerInterface{
     }
 
     @Override
+    public String getAnswerD() {
+        return AnswerD;
+    }
+
+    @Override
     public void setQuestionDisplayTime(int Time) {
 
         time = Time;
 
+    }
+
+    @Override
+    public int getQuestionDisplayTime() {
+        return time;
     }
 
     @Override
@@ -110,7 +140,7 @@ public class QuestionManger implements QuestionMangerInterface{
 
 
 
-        if(QuestionDB.AddQuestion(QuizName, newQuestion) == true)
+        if(QuestionDB.Add(QuizName, newQuestion) == true)
         {
 
         }
