@@ -1,6 +1,7 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
-import com.example.rhuarhri.asadquizapp.Databaselayer.QuizBataBase;
+import com.example.rhuarhri.asadquizapp.Databaselayer.QuizDataBase;
+import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ public class QuizManger implements  QuizMangerInterface{
     String name = "";
     String description = "";
     boolean newQuiz = false;
-    QuizBataBase QuizDB = new QuizBataBase();
+    QuizDataBase QuizDB = new QuizDataBase();
 
 
     @Override
@@ -47,12 +48,10 @@ public class QuizManger implements  QuizMangerInterface{
             return Error;
         }
 
-        Map<String, Object> newQuiz = new HashMap<>();
-        newQuiz.put("name", name);
-        newQuiz.put("description", description);
+       quiz newQuiz = new quiz(name, description);
 
 
-        if (QuizDB.Add("", newQuiz) == true)
+        if (QuizDB.Add("", newQuiz, null) == true)
         {
             //successfully added quiz
         }

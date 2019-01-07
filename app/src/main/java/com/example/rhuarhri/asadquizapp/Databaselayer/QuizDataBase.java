@@ -2,6 +2,8 @@ package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.support.annotation.NonNull;
 
+import com.example.rhuarhri.asadquizapp.customDataTypes.question;
+import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -9,27 +11,31 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.List;
 import java.util.Map;
 
-public class QuizBataBase implements QuizDataBaseInterface{
+public class QuizDataBase implements QuizDataBaseInterface{
 
     FirebaseFirestore db;
     boolean DataAddedSuccessfully = false;
     boolean isWorkingWithDataBase;
     String QuizDocumentID = "";
 
-    public QuizBataBase()
+    List<quiz> existingQuizzes;
+
+    public QuizDataBase()
     {
         db = FirebaseFirestore.getInstance();
     }
 
 
+
     @Override
-    public boolean Add(String quizDocumentId, Map<String, Object> data) {
+    public boolean Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) {
 
         isWorkingWithDataBase = true;
 
-        db.collection("quizzes").add(data)
+        db.collection("quizzes").add(AddQuiz)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -52,6 +58,31 @@ public class QuizBataBase implements QuizDataBaseInterface{
         }
 
         return DataAddedSuccessfully;
+    }
+
+    @Override
+    public List<quiz> getAllQuizzes() {
+
+        db.collection("quizzes").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++)
+                        {
+                            DocumentSnapshot QuizDocument = queryDocumentSnapshots.getDocuments().get(i);
+                            quiz currentQuiz = QuizDocument.toObject(quiz.class);
+                            existingQuizzes.add(currentQuiz);
+                        }
+                    }
+                });
+
+        return existingQuizzes;
+    }
+
+    @Override
+    public List<question> getAllQuestions() {
+        //not implemented here
+        return null;
     }
 
 

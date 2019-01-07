@@ -3,6 +3,7 @@ package com.example.rhuarhri.asadquizapp.Logiclayer;
 import android.widget.Toast;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.QuestionDataBase;
+import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -129,6 +130,7 @@ public class QuestionManger implements QuestionMangerInterface{
 
         //no errors found
 
+        /*
         Map<String, Object> newQuestion = new HashMap<>();
         newQuestion.put("question", Question);
         newQuestion.put("A", AnswerA);
@@ -136,11 +138,12 @@ public class QuestionManger implements QuestionMangerInterface{
         newQuestion.put("C", AnswerC);
         newQuestion.put("D", AnswerD);
         newQuestion.put("rightAnswer", RightAnswer);
-        newQuestion.put("DisplayTime", time);
+        newQuestion.put("DisplayTime", time);*/
+
+        question newQuestion = new question(Question, AnswerA, AnswerB, AnswerC, AnswerD, RightAnswer, time);
 
 
-
-        if(QuestionDB.Add(QuizName, newQuestion) == true)
+        if(QuestionDB.Add(QuizName,null, newQuestion) == true)
         {
 
         }
