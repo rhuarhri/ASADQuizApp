@@ -10,11 +10,11 @@ public interface QuizDataBaseInterface {
 
     //boolean Add(Map<String, Object> quiz);
 
-    boolean Add(String quizDocumentId, quiz AddQuiz, question AddQuestion);
+    void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception;
 
-    List<quiz> getAllQuizzes();
+    List<quiz> getAllQuizzes() throws Exception;
 
-    List<question> getAllQuestions();
+    List<question> getAllQuestions(String quizDocumentId) throws Exception;
 
     String getQuizDocumentID(boolean newToDataBase, String QuizName);
 

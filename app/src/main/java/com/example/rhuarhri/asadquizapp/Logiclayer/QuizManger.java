@@ -51,13 +51,12 @@ public class QuizManger implements  QuizMangerInterface{
        quiz newQuiz = new quiz(name, description);
 
 
-        if (QuizDB.Add("", newQuiz, null) == true)
-        {
-            //successfully added quiz
+        try {
+            QuizDB.Add("", newQuiz, null);
         }
-        else
+        catch (Exception e)
         {
-            Error = "failed to add quiz";
+            System.out.print(e);
         }
 
         return Error;

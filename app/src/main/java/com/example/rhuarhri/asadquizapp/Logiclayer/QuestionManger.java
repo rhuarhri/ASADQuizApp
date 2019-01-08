@@ -143,12 +143,16 @@ public class QuestionManger implements QuestionMangerInterface{
         question newQuestion = new question(Question, AnswerA, AnswerB, AnswerC, AnswerD, RightAnswer, time);
 
 
-        if(QuestionDB.Add(QuizName,null, newQuestion) == true)
-        {
+        try {
+
+
+            QuestionDB.Add(QuizName, null, newQuestion);
+
 
         }
-        else{
-            error = "Failed to add to data base";
+        catch (Exception e)
+        {
+            System.out.print(e);
         }
 
         return error;

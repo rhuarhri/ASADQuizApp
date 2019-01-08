@@ -17,7 +17,7 @@ import java.util.Map;
 public class QuizDataBase implements QuizDataBaseInterface{
 
     FirebaseFirestore db;
-    boolean DataAddedSuccessfully = false;
+    //boolean DataAddedSuccessfully = false;
     boolean isWorkingWithDataBase;
     String QuizDocumentID = "";
 
@@ -31,56 +31,90 @@ public class QuizDataBase implements QuizDataBaseInterface{
 
 
     @Override
-    public boolean Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) {
+    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception {
 
         isWorkingWithDataBase = true;
 
-        db.collection("quizzes").add(AddQuiz)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        QuizDocumentID = documentReference.getId();
-                        DataAddedSuccessfully = true;
-                        isWorkingWithDataBase = false;
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        DataAddedSuccessfully = false;
-                        isWorkingWithDataBase = false;
-                    }
-                });
+        try {
+            db.collection("quizzes").add(AddQuiz)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            QuizDocumentID = documentReference.getId();
+                            //DataAddedSuccessfully = true;
+                            isWorkingWithDataBase = false;
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //DataAddedSuccessfully = false;
+                            isWorkingWithDataBase = false;
+                        }
+                    });
 
-        while(isWorkingWithDataBase == true)
+            while(isWorkingWithDataBase == true)
+            {
+
+            }
+
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+
+
+
+
+        //return DataAddedSuccessfully;
+    }
+
+    @Override
+    public List<quiz> getAllQuizzes() throws Exception{
+
+        isWorkingWithDataBase = true;
+
+        try {
+
+            db.collection("quizzes").get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                                DocumentSnapshot QuizDocument = queryDocumentSnapshots.getDocuments().get(i);
+                                quiz currentQuiz = QuizDocument.toObject(quiz.class);
+                                existingQuizzes.add(currentQuiz);
+                            }
+
+                            isWorkingWithDataBase = false;
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    isWorkingWithDataBase = false;
+                }
+            });
+
+            while(isWorkingWithDataBase == true)
+            {
+
+            }
+
+        }
+        catch (Exception e)
         {
 
         }
 
-        return DataAddedSuccessfully;
-    }
 
-    @Override
-    public List<quiz> getAllQuizzes() {
-
-        db.collection("quizzes").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (int i = 0; i < queryDocumentSnapshots.size(); i++)
-                        {
-                            DocumentSnapshot QuizDocument = queryDocumentSnapshots.getDocuments().get(i);
-                            quiz currentQuiz = QuizDocument.toObject(quiz.class);
-                            existingQuizzes.add(currentQuiz);
-                        }
-                    }
-                });
 
         return existingQuizzes;
     }
 
     @Override
-    public List<question> getAllQuestions() {
+    public List<question> getAllQuestions(String quizDocumentID) throws Exception{
         //not implemented here
         return null;
     }

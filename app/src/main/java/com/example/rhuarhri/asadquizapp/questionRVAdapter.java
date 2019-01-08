@@ -8,11 +8,45 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.rhuarhri.asadquizapp.Databaselayer.QuizDataBase;
+import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class questionRVAdapter extends RecyclerView.Adapter<questionRVAdapter.ViewHolder> {
+
+    String[] quizNames;
+    Boolean[] isLiked;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        QuizDataBase getAllQuizzes = new QuizDataBase();
+
+        List<quiz> allQuizzes = new ArrayList<>();
+
+        try {
+            allQuizzes = getAllQuizzes.getAllQuizzes();
+        }
+        catch (Exception e)
+        {
+            System.out.print(e);
+        }
+
+
+        List<String> currentlyFoundNames = new ArrayList<String>();
+        List<Boolean> currentlyFoundIsLiked = new ArrayList<Boolean>();
+
+        for (int i = 0; i < allQuizzes.size(); i++)
+        {
+            currentlyFoundNames.add(allQuizzes.get(i).getName());
+            currentlyFoundIsLiked.add(allQuizzes.get(i).isLiked());
+        }
+
+        quizNames = (String[]) currentlyFoundNames.toArray();
+        isLiked = (Boolean[]) currentlyFoundIsLiked.toArray();
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_layout, parent, false);
 
@@ -24,7 +58,15 @@ public class questionRVAdapter extends RecyclerView.Adapter<questionRVAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.quizNameTXT.setText("Test");
+        holder.quizNameTXT.setText("" + quizNames[position]);
+        if(isLiked[position] == true)
+        {
+            holder.likeBTN.setBackgroundResource(R.drawable.heart);
+        }
+        else
+        {
+            holder.likeBTN.setBackgroundResource(R.drawable.heart_hollow);
+        }
 
     }
 
