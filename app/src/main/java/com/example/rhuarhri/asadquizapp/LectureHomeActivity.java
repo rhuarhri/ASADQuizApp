@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.rhuarhri.asadquizapp.Databaselayer.QuizDataBase;
+
 public class LectureHomeActivity extends AppCompatActivity {
 
     Button createQuizBTN;
@@ -28,9 +30,19 @@ public class LectureHomeActivity extends AppCompatActivity {
 
         questionListRV.setLayoutManager(questionListLM);
 
-        questionListAdapter = new questionRVAdapt();
+        QuizDataBase QuizBD = new QuizDataBase();
 
-        questionListRV.setAdapter(questionListAdapter);
+        try {
+            QuizBD.getAllQuizzes(questionListRV);
+        }
+        catch(Exception e)
+        {
+
+        }
+
+
+
+        //questionListRV.setAdapter(questionListAdapter);
 
         createQuizBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,5 +51,17 @@ public class LectureHomeActivity extends AppCompatActivity {
                 startActivity(goToCreateQuizScreen);
             }
         });
+
+        /*test run of quiz*/
+        Button runQuizBTN = (Button) findViewById(R.id.button2);
+
+        runQuizBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gotoStudentAccess = new Intent(getApplicationContext(), studentAccessActivity.class);
+                startActivity(gotoStudentAccess);
+            }
+        });
     }
+
 }

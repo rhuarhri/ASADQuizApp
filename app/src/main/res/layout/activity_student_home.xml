@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".StudentHomeActivity">
 
+    <Button
+        android:id="@+id/getAccessToQuizBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Get access to new quiz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -36,11 +36,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String userName = UserNameET.getText().toString();
                 String password = PasswordET.getText().toString();
-                boolean result = check.checkUser(userName, password);
+                boolean result = true; //check.checkUser(userName, password);
                 if(result == true)
                 {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     Intent goToLectureHomeScreen = new Intent(getApplicationContext(), LectureHomeActivity.class);
+                    startActivity(goToLectureHomeScreen);
                 }
                 else
                 {

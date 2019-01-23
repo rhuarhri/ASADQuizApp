@@ -6,6 +6,11 @@ public class quiz {
     private String Description;
     private boolean IsLiked;
 
+    public quiz()
+    {
+
+    }
+
     public quiz(String name, String description)
     {
         Name = name;

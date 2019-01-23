@@ -1,5 +1,7 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 
@@ -12,7 +14,7 @@ public interface QuizDataBaseInterface {
 
     void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception;
 
-    List<quiz> getAllQuizzes() throws Exception;
+    void getAllQuizzes(final RecyclerView QuizRV) throws Exception;
 
     List<question> getAllQuestions(String quizDocumentId) throws Exception;
 

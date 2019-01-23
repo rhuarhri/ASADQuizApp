@@ -16,37 +16,50 @@ import java.util.List;
 
 public class questionRVAdapter extends RecyclerView.Adapter<questionRVAdapter.ViewHolder> {
 
-    String[] quizNames;
-    Boolean[] isLiked;
+    //String[] quizNames;
+    //Boolean[] isLiked;
+
+    List<String> FoundNames;
+    List<Boolean> FoundIsLiked;
+
+
+    public questionRVAdapter (List<quiz> quizList)
+    {
+        List<quiz> allQuizzes = quizList;
+
+        FoundNames = new ArrayList<String>();
+        FoundIsLiked = new ArrayList<Boolean>();
+
+        for (int i = 0; i < allQuizzes.size(); i++)
+        {
+            FoundNames.add(allQuizzes.get(i).getName());
+            FoundIsLiked.add(allQuizzes.get(i).isLiked());
+        }
+
+        //quizNames = (String[]) currentlyFoundNames.toArray();
+        //isLiked = (Boolean[]) currentlyFoundIsLiked.toArray();
+
+    }
+
+
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        QuizDataBase getAllQuizzes = new QuizDataBase();
+        //QuizDataBase getAllQuizzes = new QuizDataBase();
 
-        List<quiz> allQuizzes = new ArrayList<>();
 
+/*
         try {
             allQuizzes = getAllQuizzes.getAllQuizzes();
         }
         catch (Exception e)
         {
             System.out.print(e);
-        }
+        }*/
 
 
-        List<String> currentlyFoundNames = new ArrayList<String>();
-        List<Boolean> currentlyFoundIsLiked = new ArrayList<Boolean>();
-
-        for (int i = 0; i < allQuizzes.size(); i++)
-        {
-            currentlyFoundNames.add(allQuizzes.get(i).getName());
-            currentlyFoundIsLiked.add(allQuizzes.get(i).isLiked());
-        }
-
-        quizNames = (String[]) currentlyFoundNames.toArray();
-        isLiked = (Boolean[]) currentlyFoundIsLiked.toArray();
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_layout, parent, false);
 
@@ -58,8 +71,8 @@ public class questionRVAdapter extends RecyclerView.Adapter<questionRVAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.quizNameTXT.setText("" + quizNames[position]);
-        if(isLiked[position] == true)
+        holder.quizNameTXT.setText("" + FoundNames.get(position));
+        if(FoundIsLiked.get(position) == true)
         {
             holder.likeBTN.setBackgroundResource(R.drawable.heart);
         }
@@ -72,7 +85,7 @@ public class questionRVAdapter extends RecyclerView.Adapter<questionRVAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return FoundIsLiked.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder

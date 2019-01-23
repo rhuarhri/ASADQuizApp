@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -9,20 +10,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 public class UserDatabase implements userDataBaseInterface {
 
-    FirebaseFirestore db;
+    /*
     boolean isUser;
-    boolean isSearching = true;
+    boolean isSearching = true;*/
 
     public UserDatabase()
     {
-        db = FirebaseFirestore.getInstance();
+
     }
 
     @Override
-    public boolean checkUser(String name, String password)
+    public void checkUser(String name, String password, Intent NextScreen)
     {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         CollectionReference citiesRef = db.collection("user");
 
@@ -33,22 +37,19 @@ public class UserDatabase implements userDataBaseInterface {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty() == true)
                 {
-                    isUser = false;
+                    //Not a user
                 }
                 else
                 {
-                    isUser = true;
+                    //Is a user
                 }
-                isSearching = false;
+
             }
         });
 
 
-        while (isSearching == true)
-        {
 
-        }
-
-        return isUser;
     }
+
+
 }

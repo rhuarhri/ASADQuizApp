@@ -1,6 +1,7 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
@@ -76,10 +77,10 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public List<quiz> getAllQuizzes() {
+    public void getAllQuizzes(RecyclerView quizRV) {
         //not implemented here
 
-        return null;
+
     }
 
     @Override

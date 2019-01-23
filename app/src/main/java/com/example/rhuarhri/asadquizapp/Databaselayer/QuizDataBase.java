@@ -1,16 +1,22 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
+import com.example.rhuarhri.asadquizapp.questionRVAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +27,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
     boolean isWorkingWithDataBase;
     String QuizDocumentID = "";
 
-    List<quiz> existingQuizzes;
+    List<quiz> existingQuizzes = new ArrayList<>();
 
     public QuizDataBase()
     {
@@ -72,35 +78,47 @@ public class QuizDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public List<quiz> getAllQuizzes() throws Exception{
+    public void getAllQuizzes(final RecyclerView QuizRV) throws Exception{
 
-        isWorkingWithDataBase = true;
+
 
         try {
 
             db.collection("quizzes").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult())  {
+                                    quiz currentQuiz = document.toObject(quiz.class);
+                                    if (currentQuiz != null) {
+                                        existingQuizzes.add(currentQuiz);
+                                    }
+                                }
+
+                                RecyclerView.Adapter quizListAdapter = new questionRVAdapter(existingQuizzes);
+
+                                QuizRV.setAdapter(quizListAdapter);
+                            }
+                        }
+                    });
+            /*
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-                                DocumentSnapshot QuizDocument = queryDocumentSnapshots.getDocuments().get(i);
-                                quiz currentQuiz = QuizDocument.toObject(quiz.class);
-                                existingQuizzes.add(currentQuiz);
-                            }
 
-                            isWorkingWithDataBase = false;
+
+
+
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    isWorkingWithDataBase = false;
+
                 }
-            });
+            });*/
 
-            while(isWorkingWithDataBase == true)
-            {
-
-            }
 
         }
         catch (Exception e)
@@ -110,7 +128,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
 
 
 
-        return existingQuizzes;
+
     }
 
     @Override
