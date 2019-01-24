@@ -5,6 +5,11 @@ public class user {
     private String UserName;
     private String Password;
 
+    public user()
+    {
+
+    }
+
     public user(String username, String password)
     {
         UserName = username;

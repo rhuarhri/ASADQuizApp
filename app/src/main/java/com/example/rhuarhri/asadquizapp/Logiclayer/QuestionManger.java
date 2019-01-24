@@ -128,17 +128,6 @@ public class QuestionManger implements QuestionMangerInterface{
             return error;
         }
 
-        //no errors found
-
-        /*
-        Map<String, Object> newQuestion = new HashMap<>();
-        newQuestion.put("question", Question);
-        newQuestion.put("A", AnswerA);
-        newQuestion.put("B", AnswerB);
-        newQuestion.put("C", AnswerC);
-        newQuestion.put("D", AnswerD);
-        newQuestion.put("rightAnswer", RightAnswer);
-        newQuestion.put("DisplayTime", time);*/
 
         question newQuestion = new question(Question, AnswerA, AnswerB, AnswerC, AnswerD, RightAnswer, time);
 

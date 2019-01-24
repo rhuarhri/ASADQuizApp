@@ -102,22 +102,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
                             }
                         }
                     });
-            /*
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-
-
-
-
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });*/
+            /**/
 
 
         }

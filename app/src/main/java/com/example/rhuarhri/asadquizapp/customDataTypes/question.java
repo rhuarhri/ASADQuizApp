@@ -10,6 +10,12 @@ public class question {
     private String RightAnswer;
     private int time;
 
+    public question()
+    {
+
+    }
+
+
     public  question(String Question, String answerA, String answerB, String answerC, String answerD, String rightAnswer, int Time)
     {
         question = Question;
