@@ -59,10 +59,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
                         }
                     });
 
-            while(isWorkingWithDataBase == true)
-            {
 
-            }
 
         }
         catch (Exception e)
@@ -126,6 +123,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
     @Override
     public String getQuizDocumentID(boolean newToDataBase, String QuizName) {
 
+        /*
         if(newToDataBase == true)
         {
             return QuizDocumentID;
@@ -148,10 +146,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
                         }
             });
 
-            while (isWorkingWithDataBase == true)
-            {
-
-            }
+          */
 
             return QuizDocumentID;
 
@@ -160,4 +155,4 @@ public class QuizDataBase implements QuizDataBaseInterface{
 
 
     }
-}
+

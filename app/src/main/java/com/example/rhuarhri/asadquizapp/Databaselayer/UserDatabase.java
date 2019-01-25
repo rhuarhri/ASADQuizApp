@@ -2,6 +2,7 @@ package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +24,7 @@ public class UserDatabase implements userDataBaseInterface {
     }
 
     @Override
-    public void checkUser(String name, String password, Intent NextScreen)
+    public void checkUser(String name, String password, final TextView loggedInDisplay)
     {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -38,10 +39,12 @@ public class UserDatabase implements userDataBaseInterface {
                 if(task.getResult().isEmpty() == true)
                 {
                     //Not a user
+                    loggedInDisplay.setText("not logged in");
                 }
                 else
                 {
                     //Is a user
+                    loggedInDisplay.setText("logged in");
                 }
 
             }

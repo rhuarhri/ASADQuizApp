@@ -20,6 +20,9 @@ public class LoginActivity extends AppCompatActivity {
 
     UserDatabase check = new UserDatabase();
 
+    String userName = "";
+    String password = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,24 +34,74 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginBTN = (Button) findViewById(R.id.LoginBTN);
 
+        UserNameET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus)
+                {
+                    userName = UserNameET.getText().toString();
+                    checkingUserData();
+                }
+            }
+        });
+
+        PasswordET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus)
+                {
+                    password = PasswordET.getText().toString();
+                    checkingUserData();
+                }
+            }
+        });
+
+
         LoginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userName = UserNameET.getText().toString();
-                String password = PasswordET.getText().toString();
+
+                if(TitleTXT.getText() != "logged in")
+                {
+
+                }
+                else {
+                    Intent goToLectureHomeScreen = new Intent(getApplicationContext(), LectureHomeActivity.class);
+                    startActivity(goToLectureHomeScreen);
+                }
+
+
+/*
+
                 boolean result = true; //check.checkUser(userName, password);
                 if(result == true)
                 {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    Intent goToLectureHomeScreen = new Intent(getApplicationContext(), LectureHomeActivity.class);
-                    startActivity(goToLectureHomeScreen);
+
                 }
                 else
                 {
                     Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
+
+                */
             }
         });
+
+    }
+
+    private void checkingUserData()
+    {
+
+        if (userName == "" || password == "")
+        {
+
+        }
+        else
+        {
+            check.checkUser(userName, password, TitleTXT);
+        }
+
 
     }
 }

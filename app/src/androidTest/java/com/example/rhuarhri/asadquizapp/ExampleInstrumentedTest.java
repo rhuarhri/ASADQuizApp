@@ -2,6 +2,7 @@ package com.example.rhuarhri.asadquizapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.UserDatabase;
@@ -11,6 +12,13 @@ import com.example.rhuarhri.asadquizapp.customDataTypes.user;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.nio.charset.Charset;
+import java.util.Random;
+
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 
 /**
@@ -33,21 +41,46 @@ public class ExampleInstrumentedTest {
     {
         //boolean result = false;
 
-        String name = "dave";
-        String password = "123";
+        //fuzz testing which is introducing random data into tests
+        /*
+        This test creates a random password and name and uses them to try and access
+        the app.
+        It should fail all of the time, however their is the slim chance that it could generate the
+        right name and password
+
+         */
+
+        byte[] randomByteData = new byte[7];
+
+        //get random byte
+        new Random().nextBytes(randomByteData);
+
+        String name = new String(randomByteData, Charset.forName("UTF-8"));
+
+        randomByteData = new byte[7];
+
+        //get random byte
+        new Random().nextBytes(randomByteData);
+
+        String password = new String(randomByteData, Charset.forName("UTF-8"));
 
         String error = "";
         String expected = "";
 
-        user testUser = new user(name, password);
-        UserDatabase checkUserDB = new UserDatabase();
-
-        /*not yet implemented
-        checkUserDB.isUser(testUser);
-
-         */
+        Espresso.onView(withId(R.id.UserNameET)).perform(typeText(name));
+        Espresso.onView(withId(R.id.PasswordET)).perform(typeText(password));
 
     }
+
+
+    @Test
+    public void test()
+    {
+        Espresso.onView(withId(R.id.TitleTXT)).check(matches(withText("Welcome to this quiz app")));
+
+
+    }
+
 
     @Test
     public void addUser()

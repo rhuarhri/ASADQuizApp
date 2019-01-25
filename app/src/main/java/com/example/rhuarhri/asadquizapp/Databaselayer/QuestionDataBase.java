@@ -84,12 +84,14 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public List<question> getAllQuestions(String quizDocumentId) throws Exception{
+    public List<question> getAllQuestions(String quizName) throws Exception{
 
-        if(quizDocumentId == "")
+        if(quizName == "")
         {
-            throw new Exception("must run get document id of the quiz first");
+            throw new Exception("Must have quiz name");
         }
+
+
 
 
 
@@ -97,29 +99,44 @@ public class QuestionDataBase implements QuizDataBaseInterface{
 
         try {
 
-            db.collection("quizzes").document(quizDocumentId)
-                    .collection("questions").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-                        DocumentSnapshot QuestionDocument = queryDocumentSnapshots.getDocuments().get(i);
-                        question currentQuiz = QuestionDocument.toObject(question.class);
-                        existingQuestions.add(currentQuiz);
-                    }
+            db.collection("quizzes").whereEqualTo("name", quizName).get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            DocumentSnapshot QuizDocument = queryDocumentSnapshots.getDocuments()
+                                    .get(queryDocumentSnapshots.size() - 1);
+                            String quizDocumentId = "";
+                            quizDocumentId = QuizDocument.getId();
 
-                    isAddingToDataBase = false;
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    isAddingToDataBase = false;
-                }
-            });
+                            db.collection("quizzes").document(quizDocumentId)
+                                    .collection("questions").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
+                                        DocumentSnapshot QuestionDocument = queryDocumentSnapshots.getDocuments().get(i);
+                                        question currentQuiz = QuestionDocument.toObject(question.class);
+                                        existingQuestions.add(currentQuiz);
+                                    }
 
-            while (isAddingToDataBase == true)
-            {
 
-            }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+
+                        }})
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+
+
+
 
         }
         catch (Exception e)
