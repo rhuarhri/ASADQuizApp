@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
 
     private ZXingScannerView mScannerView;
     Button getAccessToQuizBTN;
+    Button testBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,15 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
         setContentView(R.layout.activity_student_home);
 
         getAccessToQuizBTN = (Button) findViewById(R.id.getAccessToQuizBTN);
+        testBTN = (Button) findViewById(R.id.testBTN);
+
+        testBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToAnswerQuizActivity = new Intent(getApplicationContext(), AnswerQuizActivity.class);
+                startActivity(goToAnswerQuizActivity);
+            }
+        });
 
         getAccessToQuizBTN.setOnClickListener(new View.OnClickListener() {
             @Override
