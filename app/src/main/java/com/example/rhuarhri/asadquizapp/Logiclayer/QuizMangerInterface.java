@@ -1,16 +1,57 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.widget.TextView;
+
+import com.example.rhuarhri.asadquizapp.customDataTypes.question;
+import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
+
 public interface QuizMangerInterface {
 
-    void getExistingQuiz(String QuizName);
+    String Update(quiz newQuiz, question newQuestion);
 
-    void setQuizName(String QuizName);
+    void DisplayExistingQuiz(String name);
 
-    void setQuizDescription(String QuizDescription);
+    //void setQuizName(String QuizName);
+
+    //void setQuizDescription(String QuizDescription);
 
     String getQuizDocumentID();
 
-    String addQuiz();
+    String add(quiz newQuiz, question newQuestion);
 
-    String updateQuiz(String QuizName);
+
+    void DisplayQuestion();
+
+    //void setQuestion(String question);
+
+
+
+    //void setAnswerA(String answer, boolean isRightAnswer);
+
+    //String getAnswerA();
+
+    //void setAnswerB(String answer, boolean isRightAnswer);
+
+    //String getAnswerB();
+
+    //void setAnswerC(String answer, boolean isRightAnswer);
+
+    //String getAnswerC();
+
+    //void setAnswerD(String answer, boolean isRightAnswer);
+
+    //String getAnswerD();
+
+    //void setQuestionDisplayTime(int Time);
+
+    //int getQuestionDisplayTime();
+
+    //boolean checkIfAnswerCorrect(String id);
+
+    //String saveQuestion();
+
+    public void startQuestion();
+
+    public void endQuestion();
+
 }

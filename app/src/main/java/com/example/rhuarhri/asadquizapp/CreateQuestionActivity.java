@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhuarhri.asadquizapp.Logiclayer.QuestionManger;
+import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 
 public class CreateQuestionActivity extends AppCompatActivity {
 
@@ -34,6 +35,8 @@ public class CreateQuestionActivity extends AppCompatActivity {
     QuestionManger questionManger;
 
     String LastAnswerEdited;
+
+    question newQuestion = new question();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +65,14 @@ public class CreateQuestionActivity extends AppCompatActivity {
         saveQuestionBTN = (Button) findViewById(R.id.saveBTN);
 
         //add question code
-        QuestionET.setText(questionManger.getQuestion());
+        QuestionET.setText("");
         QuestionET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus)
                 {
                     //save question
-                    questionManger.setQuestion(QuestionET.getText().toString());
+                    newQuestion.setQuestion(QuestionET.getText().toString());
                 }
             }
         });
@@ -79,8 +82,16 @@ public class CreateQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LastAnswerEdited = "A";
-                AnswerET.setText(questionManger.getAnswerA());
-                isCorrectBTN.setChecked(questionManger.checkIfAnswerCorrect("A"));
+                AnswerET.setText(newQuestion.getAnswerA());
+                if (newQuestion.getRightAnswer() == LastAnswerEdited)
+                {
+                    isCorrectBTN.setChecked(true);
+                }
+                else
+                {
+                    isCorrectBTN.setChecked(false);
+                }
+
             }
         });
 
@@ -88,8 +99,13 @@ public class CreateQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LastAnswerEdited = "B";
-                AnswerET.setText(questionManger.getAnswerB());
-                isCorrectBTN.setChecked(questionManger.checkIfAnswerCorrect("B"));
+                AnswerET.setText(newQuestion.getAnswerB());
+                if (newQuestion.getRightAnswer() == LastAnswerEdited) {
+                    isCorrectBTN.setChecked(true);
+                } else {
+                    isCorrectBTN.setChecked(false);
+
+                }
             }
         });
 
@@ -97,8 +113,13 @@ public class CreateQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LastAnswerEdited = "C";
-                AnswerET.setText(questionManger.getAnswerC());
-                isCorrectBTN.setChecked(questionManger.checkIfAnswerCorrect("C"));
+                AnswerET.setText(newQuestion.getAnswerC());
+                if (newQuestion.getRightAnswer() == LastAnswerEdited) {
+                    isCorrectBTN.setChecked(true);
+                } else {
+                    isCorrectBTN.setChecked(false);
+
+                }
             }
         });
 
@@ -106,8 +127,13 @@ public class CreateQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LastAnswerEdited = "D";
-                AnswerET.setText(questionManger.getAnswerD());
-                isCorrectBTN.setChecked(questionManger.checkIfAnswerCorrect("D"));
+                AnswerET.setText(newQuestion.getAnswerD());
+                if (newQuestion.getRightAnswer() == LastAnswerEdited) {
+                    isCorrectBTN.setChecked(true);
+                } else {
+                    isCorrectBTN.setChecked(false);
+
+                }
             }
         });
 
@@ -118,18 +144,30 @@ public class CreateQuestionActivity extends AppCompatActivity {
                 {
                     if(LastAnswerEdited == "A")
                     {
-                        questionManger.setAnswerA(AnswerET.getText().toString(), isCorrectBTN.isChecked());
+                        newQuestion.setAnswerA(AnswerET.getText().toString());
+                        if (isCorrectBTN.isChecked() == true) {
+                            newQuestion.setCorrectAnswer(true, false, false, false);
+                        }
                     }
                     else if (LastAnswerEdited == "B") {
-                        questionManger.setAnswerB(AnswerET.getText().toString(), isCorrectBTN.isChecked());
+                        newQuestion.setAnswerB(AnswerET.getText().toString());
+                        if (isCorrectBTN.isChecked() == true) {
+                            newQuestion.setCorrectAnswer(false, true, false, false);
+                        }
                     }
                     else if (LastAnswerEdited == "C")
                     {
-                        questionManger.setAnswerC(AnswerET.getText().toString(), isCorrectBTN.isChecked());
+                        newQuestion.setAnswerC(AnswerET.getText().toString());
+                        if (isCorrectBTN.isChecked() == true) {
+                            newQuestion.setCorrectAnswer(false, false, true, false);
+                        }
                     }
                     else if(LastAnswerEdited == "D")
                     {
-                        questionManger.setAnswerD(AnswerET.getText().toString(), isCorrectBTN.isChecked());
+                        newQuestion.setAnswerD(AnswerET.getText().toString());
+                        if (isCorrectBTN.isChecked() == true) {
+                            newQuestion.setCorrectAnswer(false, false, false, true);
+                        }
                     }
                 }
             }
@@ -141,7 +179,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
 
-                questionManger.setQuestionDisplayTime(progress);
+                newQuestion.setTime(progress);
                 TimeDisplayTXT.setText("" + progress + " seconds");
 
             }
@@ -168,7 +206,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         saveQuestionBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String error = questionManger.saveQuestion();
+                String error = questionManger.add(null, newQuestion);
 
                 if (error != "")
                 {

@@ -2,6 +2,7 @@ package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
@@ -158,5 +159,15 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     public String getQuizDocumentID(boolean newToDataBase, String QuizName) {
         //not implemented here
         return null;
+    }
+
+    @Override
+    public void getQuestion(String QuizID, TextView questionTXT, TextView answerATXT, TextView answerBTXT, TextView answerCTXT, TextView answerDTXT) {
+        //Not implemented here
+    }
+
+    @Override
+    public void checkAnswer(String answer, String QuizID, TextView rightAnswerTXT) {
+        //Not implemented here
     }
 }

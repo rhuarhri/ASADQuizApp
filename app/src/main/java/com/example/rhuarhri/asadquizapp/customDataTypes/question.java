@@ -2,13 +2,13 @@ package com.example.rhuarhri.asadquizapp.customDataTypes;
 
 public class question {
 
-    private String question;
-    private String AnswerA;
-    private String AnswerB;
-    private String AnswerC;
-    private String AnswerD;
-    private String RightAnswer;
-    private int time;
+    private String question = "";
+    private String AnswerA = "";
+    private String AnswerB = "";
+    private String AnswerC = "";
+    private String AnswerD = "";
+    private String RightAnswer = "";
+    private int time = 0;
 
     public question()
     {
@@ -77,6 +77,29 @@ public class question {
 
     public void setRightAnswer(String rightAnswer) {
         RightAnswer = rightAnswer;
+    }
+
+    public void setCorrectAnswer(Boolean IsAnswerACorrect, Boolean IsAnswerBCorrect, Boolean IsAnswerCCorrect, Boolean IsAnswerDCorrect)
+    {
+        if (IsAnswerACorrect == true)
+        {
+            RightAnswer = "A";
+        }
+
+        if (IsAnswerBCorrect == true)
+        {
+            RightAnswer = "B";
+        }
+
+        if (IsAnswerCCorrect == true)
+        {
+            RightAnswer = "C";
+        }
+
+        if (IsAnswerDCorrect == true)
+        {
+            RightAnswer = "D";
+        }
     }
 
     public void setTime(int time) {

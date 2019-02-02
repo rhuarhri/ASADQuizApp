@@ -1,14 +1,16 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.QuestionDataBase;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
+import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuestionManger implements QuestionMangerInterface{
+public class QuestionManger implements QuizMangerInterface{
 
     String QuizName = "";
     String Question = "";
@@ -28,109 +30,82 @@ public class QuestionManger implements QuestionMangerInterface{
         QuizName = quizname;
     }
 
-    @Override
-    public void setQuestion(String question) {
-        Question = question;
-    }
 
-    @Override
-    public String getQuestion() {
-        return Question;
-    }
-
-    @Override
-    public void setAnswerA(String answer, boolean isRightAnswer) {
-        AnswerA = answer;
-        if(isRightAnswer == true)
+    private String checkForErrors(question checkQuestion)
+    {
+        if(checkQuestion.getQuestion() == "")
         {
-            RightAnswer = "A";
+            return "No question added";
+
         }
-    }
 
-    @Override
-    public String getAnswerA() {
-        return AnswerA;
-    }
-
-    @Override
-    public void setAnswerB(String answer, boolean isRightAnswer) {
-        AnswerB = answer;
-        if(isRightAnswer == true)
+        if(checkQuestion.getAnswerA() == "")
         {
-            RightAnswer = "B";
+            return "No A choice added";
+
         }
-    }
 
-    @Override
-    public String getAnswerB() {
-        return AnswerB;
-    }
-
-    @Override
-    public void setAnswerC(String answer, boolean isRightAnswer) {
-        AnswerC = answer;
-        if(isRightAnswer == true)
+        if(checkQuestion.getAnswerB() == "")
         {
-            RightAnswer = "C";
+            return "No B choice added";
+
         }
-    }
 
-    @Override
-    public String getAnswerC() {
-        return AnswerC;
-    }
-
-    @Override
-    public void setAnswerD(String answer, boolean isRightAnswer) {
-        AnswerD = answer;
-        if(isRightAnswer == true)
+        if(checkQuestion.getAnswerC() == "")
         {
-            RightAnswer = "D";
+            return "No C choice added";
+
         }
-    }
 
-    @Override
-    public String getAnswerD() {
-        return AnswerD;
-    }
-
-    @Override
-    public void setQuestionDisplayTime(int Time) {
-
-        time = Time;
-
-    }
-
-    @Override
-    public int getQuestionDisplayTime() {
-        return time;
-    }
-
-    @Override
-    public boolean checkIfAnswerCorrect(String id) {
-        if(RightAnswer == id)
+        if(checkQuestion.getAnswerD() == "")
         {
-            return true;
+            return "No D choice added";
+
         }
-        else {
-            return false;
+
+        if(checkQuestion.getRightAnswer() == "")
+        {
+            return "No Right answer Selected";
+
         }
+
+        if(checkQuestion.getTime() == 0)
+        {
+            return "Question Time not added";
+        }
+
+        //no errors found
+        return "";
     }
 
+    @Override
+    public String Update(quiz newQuiz, question newQuestion) {
+        String error = checkForErrors(newQuestion);
+
+        return error;
+    }
 
     @Override
-    public String saveQuestion() {
+    public void DisplayExistingQuiz(String name) {
+        //Not implemented here
+    }
 
-        String error = checkForErrors();
+    @Override
+    public String getQuizDocumentID() {
+
+        //Not implemented here
+
+        return null;
+    }
+
+    @Override
+    public String add(quiz newQuiz, question newQuestion) {
+        String error = checkForErrors(newQuestion);
 
         if (error != "")
         {
             return error;
         }
-
-
-        question newQuestion = new question(Question, AnswerA, AnswerB, AnswerC, AnswerD, RightAnswer, time);
-
 
         try {
 
@@ -147,50 +122,20 @@ public class QuestionManger implements QuestionMangerInterface{
         return error;
     }
 
-    private String checkForErrors()
-    {
-        if(Question == "")
-        {
-            return "No question added";
-
-        }
-
-        if(AnswerA == "")
-        {
-            return "No A choice added";
-
-        }
-
-        if(AnswerB == "")
-        {
-            return "No B choice added";
-
-        }
-
-        if(AnswerC == "")
-        {
-            return "No C choice added";
-
-        }
-
-        if(AnswerD == "")
-        {
-            return "No D choice added";
-
-        }
-
-        if(RightAnswer == "")
-        {
-            return "No Right answer Selected";
-
-        }
-
-        if(time == 0)
-        {
-            return "Question Time not added";
-        }
-
-        //no errors found
-        return "";
+    @Override
+    public void DisplayQuestion() {
+        //Not implemented here
     }
+
+    @Override
+    public void startQuestion() {
+        //Not implemented here
+    }
+
+    @Override
+    public void endQuestion() {
+
+    }
+
+
 }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.rhuarhri.asadquizapp.Logiclayer.QuestionManger;
 import com.example.rhuarhri.asadquizapp.Logiclayer.QuizManger;
+import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +32,8 @@ public class CreateQuizActivity extends AppCompatActivity {
     Button addQuestionBTN;
     QuizManger quizManger = new QuizManger();
     String QuizID = "";
+
+    quiz newQuiz = new quiz();
 
     //Map<String, Object> quiz = new HashMap<>();
 
@@ -86,11 +89,11 @@ public class CreateQuizActivity extends AppCompatActivity {
         String quizName = nameET.getText().toString();
         String quizDescription = descriptionET.getText().toString();
 
-        quizManger.setQuizName(quizName);
+        newQuiz.setName(quizName);
 
-        quizManger.setQuizDescription(quizDescription);
+        newQuiz.setDescription(quizDescription);
 
-        String error = quizManger.addQuiz();
+        String error = quizManger.add(newQuiz, null);
 
         if(error != "") {
             Toast.makeText(CreateQuizActivity.this, "ERROR: " + error, Toast.LENGTH_LONG).show();

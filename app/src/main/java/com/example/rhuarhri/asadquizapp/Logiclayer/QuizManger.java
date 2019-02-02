@@ -1,6 +1,9 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.widget.TextView;
+
 import com.example.rhuarhri.asadquizapp.Databaselayer.QuizDataBase;
+import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 
 import java.util.HashMap;
@@ -10,45 +13,44 @@ public class QuizManger implements  QuizMangerInterface{
 
     String name = "";
     String description = "";
-    boolean newQuiz = false;
+    boolean IsNewQuiz = false;
     QuizDataBase QuizDB = new QuizDataBase();
 
-
+/*
     @Override
     public void getExistingQuiz(String QuizName) {
         newQuiz = false;
         //TODO add code to get quiz from data base
-    }
+    }*/
+
+
+
 
     @Override
-    public void setQuizName(String QuizName) {
-        name = QuizName;
-    }
+    public void DisplayExistingQuiz(String name) {
 
-    @Override
-    public void setQuizDescription(String QuizDescription) {
-        description = QuizDescription;
     }
 
     @Override
     public String getQuizDocumentID() {
 
-        return QuizDB.getQuizDocumentID(newQuiz, name);
+        return QuizDB.getQuizDocumentID(IsNewQuiz, name);
 
 
     }
 
     @Override
-    public String addQuiz() {
+    public String add(quiz newQuiz, question newQuestion) {
 
-        String Error = checkForErrors();
+
+
+        String Error = checkForErrors(newQuiz);
 
         if(Error != "")
         {
             return Error;
         }
 
-       quiz newQuiz = new quiz(name, description);
 
 
         try {
@@ -63,8 +65,27 @@ public class QuizManger implements  QuizMangerInterface{
     }
 
     @Override
-    public String updateQuiz(String QuizName) {
-        String Error = checkForErrors();
+    public void DisplayQuestion() {
+        //Not implemented here
+    }
+
+    @Override
+    public void startQuestion() {
+
+    }
+
+    @Override
+    public void endQuestion() {
+
+    }
+
+
+    @Override
+    public String Update(quiz newQuiz, question newQuestion) {
+
+        IsNewQuiz = false;
+
+        String Error = checkForErrors(newQuiz);
 
         if(Error != "")
         {
@@ -75,27 +96,28 @@ public class QuizManger implements  QuizMangerInterface{
     }
 
 
-    private String checkForErrors()
+    private String checkForErrors(quiz checkQuiz)
     {
-        if(name == "")
+        if(checkQuiz.getName() == "")
         {
             return "Name not added";
         }
 
-        if (description == "")
+        if (checkQuiz.getDescription() == "")
         {
             return "Description not added";
         }
 
+        /*
         //checks if quiz name is already used
-        if(QuizDB.getQuizDocumentID(false, name) == "")
+        if(QuizDB.getQuizDocumentID(false, checkQuiz.getName()) == "")
         {
             //name not found in data base
         }
         else
         {
             return "Quiz name already exists";
-        }
+        }*/
 
         //no errors found
         return "";

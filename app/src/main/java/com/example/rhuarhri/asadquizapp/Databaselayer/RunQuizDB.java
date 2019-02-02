@@ -1,16 +1,20 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
+import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class RunQuizDB implements RunQuizInterface {
+import java.util.List;
+
+public class RunQuizDB implements QuizDataBaseInterface {
 
     int nextQuestion;
 
@@ -20,6 +24,27 @@ public class RunQuizDB implements RunQuizInterface {
     }
 
 
+    @Override
+    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception {
+        //Not implemented here
+    }
+
+    @Override
+    public void getAllQuizzes(RecyclerView QuizRV) throws Exception {
+        //Not implemented here
+    }
+
+    @Override
+    public List<question> getAllQuestions(String quizDocumentId) throws Exception {
+        //Not implemented here
+        return null;
+    }
+
+    @Override
+    public String getQuizDocumentID(boolean newToDataBase, String QuizName) {
+        //Not implemented here
+        return null;
+    }
 
     @Override
     public void getQuestion(String QuizID, final TextView questionTXT, final TextView answerATXT, final TextView answerBTXT, final TextView answerCTXT, final TextView answerDTXT) {
