@@ -61,14 +61,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(TitleTXT.getText() != "logged in")
+                /*if(TitleTXT.getText() != "logged in")
                 {
 
                 }
-                else {
+                else {*/
                     Intent goToLectureHomeScreen = new Intent(getApplicationContext(), LectureHomeActivity.class);
                     startActivity(goToLectureHomeScreen);
-                }
+                //}
 
 
 /*
