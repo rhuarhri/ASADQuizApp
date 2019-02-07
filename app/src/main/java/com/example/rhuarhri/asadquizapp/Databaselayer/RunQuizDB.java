@@ -1,14 +1,20 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.rhuarhri.asadquizapp.Logiclayer.RunQuizController;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -17,6 +23,8 @@ import java.util.List;
 public class RunQuizDB implements QuizDataBaseInterface {
 
     int nextQuestion;
+    RunQuizController RQC;
+    String QuestionDocumentID = "";
 
     public RunQuizDB()
     {
@@ -47,8 +55,10 @@ public class RunQuizDB implements QuizDataBaseInterface {
     }
 
     @Override
-    public void getQuestion(String QuizID, final TextView questionTXT, final TextView answerATXT, final TextView answerBTXT, final TextView answerCTXT, final TextView answerDTXT) {
+    public void getQuestion(String QuizID, final TextView questionTXT, final TextView answerATXT, final TextView answerBTXT, final TextView answerCTXT, final TextView answerDTXT, final ProgressBar TimerPB) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
 
         db.collection("quizzes").document(QuizID)
                 .collection("questions").get()
@@ -59,14 +69,17 @@ public class RunQuizDB implements QuizDataBaseInterface {
                             int questionIterator = 0;
                             for (QueryDocumentSnapshot document : task.getResult())  {
                                 if (questionIterator == nextQuestion) {
+                                    QuestionDocumentID = document.getId().toString();
                                     question currentQuestion = document.toObject(question.class);
                                     if (currentQuestion != null) {
                                         questionTXT.setText(currentQuestion.getQuestion());
-                                        answerATXT.setText(currentQuestion.getAnswerA());
-                                        answerBTXT.setText(currentQuestion.getAnswerB());
-                                        answerCTXT.setText(currentQuestion.getAnswerC());
-                                        answerDTXT.setText(currentQuestion.getAnswerD());
+                                        answerATXT.setText("A: " + currentQuestion.getAnswerA());
+                                        answerBTXT.setText("B: " + currentQuestion.getAnswerB());
+                                        answerCTXT.setText("C: " + currentQuestion.getAnswerC());
+                                        answerDTXT.setText("D: " + currentQuestion.getAnswerD());
 
+                                        RQC = new RunQuizController();
+                                        RQC.startQuestionTimer(currentQuestion.getTime(), TimerPB);
 
                                     }
                                 }
@@ -74,46 +87,76 @@ public class RunQuizDB implements QuizDataBaseInterface {
                             }
                         }}
                 });
+/*
+        db.collection("quizzes").document(QuizID).collection("questions").document(QuestionDocumentID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    //Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    //Log.d(TAG, "Current data: " + snapshot.getData());
+                    //TODO find a way that the lecture can end the question from their app
+
+                } else {
+                    //Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+        */
     }
 
     @Override
     public void checkAnswer(final String answer, String QuizID, final TextView rightAnswerTXT) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("quizzes").document(QuizID)
-                .collection("questions").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            int questionIterator = 0;
-                            for (QueryDocumentSnapshot document : task.getResult())  {
+        if(answer == "")
+        {
+            //answer wrong
+            rightAnswerTXT.setText("wrong");
+        }
+        else {
+
+            RQC.stopQuestionTimer();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            db.collection("quizzes").document(QuizID)
+                    .collection("questions").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                int questionIterator = 0;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
 
 
-                                if (questionIterator == nextQuestion) {
+                                    if (questionIterator == nextQuestion) {
 
-                                    question currentQuestion = document.toObject(question.class);
+                                        question currentQuestion = document.toObject(question.class);
 
-                                    if (currentQuestion != null) {
+                                        if (currentQuestion != null) {
 
-                                        if(currentQuestion.getRightAnswer().equals(answer) == true)
-                                        {
-                                            //answer correct
-                                            rightAnswerTXT.setText("correct");
+                                            if (currentQuestion.getRightAnswer().equals(answer) == true) {
+                                                //answer correct
+                                                rightAnswerTXT.setText("correct");
+                                            } else {
+                                                //answer wrong
+                                                rightAnswerTXT.setText("wrong");
+                                            }
+
+
                                         }
-                                        else
-                                        {
-                                            //answer wrong
-                                            rightAnswerTXT.setText("wrong");
-                                        }
-
-
                                     }
+                                    questionIterator++;
                                 }
-                                questionIterator++;
                             }
-                        }}
-                });
+                        }
+                    });
+        }
     }
 
     public void setNextQuestion()

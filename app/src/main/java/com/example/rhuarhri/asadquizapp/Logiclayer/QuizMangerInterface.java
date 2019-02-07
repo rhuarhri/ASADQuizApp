@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
@@ -52,6 +53,10 @@ public interface QuizMangerInterface {
 
     public void startQuestion();
 
-    public void endQuestion();
+    public void endQuestion(String answer);
+
+    void startQuestionTimer(int time, final ProgressBar timerPB);
+
+    void stopQuestionTimer();
 
 }

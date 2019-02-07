@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.UserDatabase;
 import com.example.rhuarhri.asadquizapp.Logiclayer.QuestionManger;
+import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.user;
 
 import org.junit.Test;
@@ -154,16 +155,22 @@ public class ExampleInstrumentedTest {
 
         QuestionManger QM = new QuestionManger(QuizID);
 
-        QM.setQuestion(Question);
+        question newQuestion = new question();
 
-        QM.setAnswerA(AnswerA, true);
-        QM.setAnswerB(AnswerB, false);
-        QM.setAnswerC(AnswerC, false);
-        QM.setAnswerD(AnswerD, false);
-        QM.setQuestionDisplayTime(questionDisplayTime);
+        newQuestion.setQuestion(Question);
+
+        newQuestion.setAnswerA(AnswerA);
+        newQuestion.setAnswerB(AnswerB);
+        newQuestion.setAnswerC(AnswerC);
+        newQuestion.setAnswerD(AnswerD);
+        newQuestion.setTime(questionDisplayTime);
+
+        newQuestion.setCorrectAnswer(true, false, false, false);
+
+
 
         try {
-            error = QM.saveQuestion();
+            error = QM.add(null, newQuestion);
 
         }
         catch(Exception e)
@@ -191,16 +198,22 @@ public class ExampleInstrumentedTest {
 
         QuestionManger QM = new QuestionManger(QuizID);
 
-        QM.setQuestion(Question);
+        question newQuestion = new question();
 
-        QM.setAnswerA(AnswerA, true);
-        QM.setAnswerB(AnswerB, false);
-        QM.setAnswerC(AnswerC, false);
-        QM.setAnswerD(AnswerD, false);
-        QM.setQuestionDisplayTime(questionDisplayTime);
+        newQuestion.setQuestion(Question);
+
+        newQuestion.setAnswerA(AnswerA);
+        newQuestion.setAnswerB(AnswerB);
+        newQuestion.setAnswerC(AnswerC);
+        newQuestion.setAnswerD(AnswerD);
+        newQuestion.setTime(questionDisplayTime);
+
+        newQuestion.setCorrectAnswer(true, false, false, false);
+
+
 
         try {
-            error = QM.saveQuestion();
+            error = QM.add(null, newQuestion);
 
         }
         catch(Exception e)
@@ -234,19 +247,25 @@ public class ExampleInstrumentedTest {
 
         QuestionManger QM = new QuestionManger(QuizID);
 
-        QM.setQuestion(Question);
+        question newQuestion = new question();
+
+        newQuestion.setQuestion(Question);
+
+        newQuestion.setAnswerA(AnswerA);
+        newQuestion.setAnswerB(AnswerB);
+        newQuestion.setAnswerC(AnswerC);
+        newQuestion.setAnswerD(AnswerD);
+        newQuestion.setTime(questionDisplayTime);
 
         /* all questions set as wrong no right answer selected
         this might be a common thing that a user may forget to do
         */
-        QM.setAnswerA(AnswerA, false);
-        QM.setAnswerB(AnswerB, false);
-        QM.setAnswerC(AnswerC, false);
-        QM.setAnswerD(AnswerD, false);
-        QM.setQuestionDisplayTime(questionDisplayTime);
+        newQuestion.setCorrectAnswer(true, false, false, false);
+
+
 
         try {
-            error = QM.saveQuestion();
+            error = QM.add(null, newQuestion);
 
         }
         catch(Exception e)

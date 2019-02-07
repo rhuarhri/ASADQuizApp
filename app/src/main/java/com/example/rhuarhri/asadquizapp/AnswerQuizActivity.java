@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.RunQuizDB;
+import com.example.rhuarhri.asadquizapp.Logiclayer.RunQuizController;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,6 +19,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class AnswerQuizActivity extends AppCompatActivity {
+
+    ProgressBar TimePB;
 
     TextView questionTXT;
     TextView answerATXT;
@@ -31,12 +35,15 @@ public class AnswerQuizActivity extends AppCompatActivity {
     Button CBTN;
     Button DBTN;
 
-    RunQuizDB QuizRunning = new RunQuizDB();
+    RunQuizController QuizRunning;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_quiz);
+
+        TimePB = findViewById(R.id.timerPB);
 
         questionTXT = findViewById(R.id.questionTXT);
         answerATXT = findViewById(R.id.answerATXT);
@@ -51,13 +58,15 @@ public class AnswerQuizActivity extends AppCompatActivity {
         CBTN = findViewById(R.id.CBTN);
         DBTN = findViewById(R.id.DBTN);
 
+        QuizRunning = new RunQuizController("EVEKNRGGP35kYsxh1za8",  questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT, TimePB, RightAnswerTXT);
 
-        QuizRunning.getQuestion("EVEKNRGGP35kYsxh1za8", questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT);
+
+        QuizRunning.startQuestion();
 
         ABTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QuizRunning.checkAnswer("A", "EVEKNRGGP35kYsxh1za8", RightAnswerTXT);
+                QuizRunning.endQuestion("A");
 
             }
         });
@@ -65,21 +74,21 @@ public class AnswerQuizActivity extends AppCompatActivity {
         BBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QuizRunning.checkAnswer("B", "EVEKNRGGP35kYsxh1za8", RightAnswerTXT);
+                QuizRunning.endQuestion("B");
             }
         });
 
         CBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QuizRunning.checkAnswer("C", "EVEKNRGGP35kYsxh1za8", RightAnswerTXT);
+                QuizRunning.endQuestion("C");
             }
         });
 
         DBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QuizRunning.checkAnswer("D", "EVEKNRGGP35kYsxh1za8", RightAnswerTXT);
+                QuizRunning.endQuestion("D");
 
 
             }

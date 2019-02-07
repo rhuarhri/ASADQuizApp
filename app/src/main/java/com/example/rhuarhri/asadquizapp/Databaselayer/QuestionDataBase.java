@@ -2,6 +2,7 @@ package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
@@ -162,7 +163,8 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public void getQuestion(String QuizID, TextView questionTXT, TextView answerATXT, TextView answerBTXT, TextView answerCTXT, TextView answerDTXT) {
+    public void getQuestion(String QuizID, final TextView questionTXT, final TextView answerATXT, final TextView answerBTXT, final TextView answerCTXT, final TextView answerDTXT, final ProgressBar TimerPB)
+    {
         //Not implemented here
     }
 

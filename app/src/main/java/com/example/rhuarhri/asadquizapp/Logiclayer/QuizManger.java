@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.QuizDataBase;
@@ -71,12 +72,22 @@ public class QuizManger implements  QuizMangerInterface{
 
     @Override
     public void startQuestion() {
-
+        //Not implemented here
     }
 
     @Override
-    public void endQuestion() {
+    public void endQuestion(String answer) {
+        //Not implemented here
+    }
 
+    @Override
+    public void startQuestionTimer(int time, ProgressBar timerPB) {
+        //Not implemented here
+    }
+
+    @Override
+    public void stopQuestionTimer() {
+        //Not implemented here
     }
 
 
