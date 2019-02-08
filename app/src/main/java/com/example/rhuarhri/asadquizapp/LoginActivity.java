@@ -16,9 +16,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText UserNameET;
     EditText PasswordET;
     Button LoginBTN;
+    Button SignInBTN;
     TextView TitleTXT;
 
-    UserDatabase check = new UserDatabase();
+    UserDatabase check;
 
     String userName = "";
     String password = "";
@@ -33,41 +34,32 @@ public class LoginActivity extends AppCompatActivity {
         TitleTXT = (TextView) findViewById(R.id.TitleTXT);
 
         LoginBTN = (Button) findViewById(R.id.LoginBTN);
+        SignInBTN = (Button) findViewById(R.id.signUpBTN);
 
-        UserNameET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        check = new UserDatabase(TitleTXT, getApplicationContext());
+
+        SignInBTN.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus)
-                {
-                    userName = UserNameET.getText().toString();
-                    checkingUserData();
-                }
+            public void onClick(View view) {
+                Intent goToSignUpActivity = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(goToSignUpActivity);
             }
         });
-
-        PasswordET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus)
-                {
-                    password = PasswordET.getText().toString();
-                    checkingUserData();
-                }
-            }
-        });
-
 
         LoginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                userName = UserNameET.getText().toString();
+                password = PasswordET.getText().toString();
+
+                check.checkUser(userName, password);
                 /*if(TitleTXT.getText() != "logged in")
                 {
 
                 }
                 else {*/
-                    Intent goToLectureHomeScreen = new Intent(getApplicationContext(), LectureHomeActivity.class);
-                    startActivity(goToLectureHomeScreen);
+
                 //}
 
 
@@ -90,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /*
     private void checkingUserData()
     {
 
@@ -103,5 +96,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-    }
+    }*/
 }

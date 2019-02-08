@@ -89,7 +89,9 @@ public class ExampleInstrumentedTest {
         Espresso.onView(withId(R.id.UserNameET)).perform(typeText(name));
         Espresso.onView(withId(R.id.PasswordET)).perform(typeText(password));
 
-        Espresso.onView(withId(R.id.TitleTXT)).check(matches(withText("not logged in")));
+        Espresso.onView(withId(R.id.LoginBTN)).perform(click());
+
+        Espresso.onView(withId(R.id.TitleTXT)).check(matches(withText("login failed")));
         /*
         This test will most likely fail as the did not wait for the result to come from the data base
         before checking
@@ -97,29 +99,24 @@ public class ExampleInstrumentedTest {
 
     }
 
+    @Rule
+    public ActivityTestRule<LoginActivity> SignInAct = new ActivityTestRule<>(LoginActivity.class);
+
     @Test
     public void addLecture()
     {
         String name = "fred";
         String password = "567";
 
-        String error = "";
-        String expected = "";
 
-        user testUser = new user(name, password);
+        Espresso.onView(withId(R.id.nameET)).perform(typeText(name));
+        Espresso.onView(withId(R.id.passwordET)).perform(typeText(password));
 
-        UserDatabase userAddDB = new UserDatabase();
+        Espresso.onView(withId(R.id.signUpBTN)).perform(click());
 
-        try {
-            userAddDB.addUser(name, password);
+        Espresso.onView(withId(R.id.TitleTXT)).check(matches(withText("successful")));
 
-        }
-        catch(Exception e)
-        {
-            error = "failed to add";
-        }
 
-        assertEquals(expected, error);
     }
 
     /**
@@ -146,7 +143,7 @@ public class ExampleInstrumentedTest {
 
 
         try {
-            error = quizManger.add(newQuiz, null);
+            error = quizManger.add(newQuiz, null, null);
 
         }
         catch(Exception e)
@@ -177,7 +174,7 @@ public class ExampleInstrumentedTest {
         newQuiz.setDescription(QuizDescription);
 
         try {
-            error = quizManger.add(newQuiz, null);
+            error = quizManger.add(newQuiz, null, null);
 
         }
         catch(Exception e)
@@ -235,7 +232,7 @@ public class ExampleInstrumentedTest {
 
 
         try {
-            error = QM.add(null, newQuestion);
+            error = QM.add(null, newQuestion, null);
 
         }
         catch(Exception e)
@@ -278,7 +275,7 @@ public class ExampleInstrumentedTest {
 
 
         try {
-            error = QM.add(null, newQuestion);
+            error = QM.add(null, newQuestion, null);
 
         }
         catch(Exception e)
@@ -330,7 +327,7 @@ public class ExampleInstrumentedTest {
 
 
         try {
-            error = QM.add(null, newQuestion);
+            error = QM.add(null, newQuestion, null);
 
         }
         catch(Exception e)
@@ -358,6 +355,8 @@ public class ExampleInstrumentedTest {
     @Test
     public void addStudentNickname()
     {
+        //TODO change this test to remove the error
+
         String name = "fred";
 
         String error = "";

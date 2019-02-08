@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +34,7 @@ public class RunQuizDB implements QuizDataBaseInterface {
 
 
     @Override
-    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception {
+    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion, Context context) throws Exception {
         //Not implemented here
     }
 

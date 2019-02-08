@@ -1,10 +1,13 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.rhuarhri.asadquizapp.CreateQuestionActivity;
 import com.example.rhuarhri.asadquizapp.Logiclayer.RunQuizController;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
@@ -41,9 +44,9 @@ public class QuizDataBase implements QuizDataBaseInterface{
 
 
     @Override
-    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception {
+    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion, final Context context) throws Exception {
 
-        isWorkingWithDataBase = true;
+
 
         try {
             db.collection("quizzes").add(AddQuiz)
@@ -52,14 +55,20 @@ public class QuizDataBase implements QuizDataBaseInterface{
                         public void onSuccess(DocumentReference documentReference) {
                             QuizDocumentID = documentReference.getId();
                             //DataAddedSuccessfully = true;
-                            isWorkingWithDataBase = false;
+                            if (context != null)
+                            {
+                                Intent addQuestionScreen = new Intent(context, CreateQuestionActivity.class);
+                                addQuestionScreen.putExtra("ID", QuizDocumentID);
+                                context.startActivity(addQuestionScreen);
+                            }
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             //DataAddedSuccessfully = false;
-                            isWorkingWithDataBase = false;
+
                         }
                     });
 

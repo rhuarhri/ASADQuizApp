@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class RunQuizController implements QuizMangerInterface {
     }
 
     @Override
-    public String Update(quiz newQuiz, question newQuestion) {
+    public String Update(quiz newQuiz, question newQuestion, Context context) {
         //Not implemented here
         return null;
     }
@@ -65,7 +66,7 @@ public class RunQuizController implements QuizMangerInterface {
     }
 
     @Override
-    public String add(quiz newQuiz, question newQuestion) {
+    public String add(quiz newQuiz, question newQuestion, Context context) {
         //Not implemented here
         return null;
     }

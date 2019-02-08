@@ -1,10 +1,13 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.rhuarhri.asadquizapp.LectureHomeActivity;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,7 +36,7 @@ public class QuestionDataBase implements QuizDataBaseInterface{
 
 
     @Override
-    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception{
+    public void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion, final Context context) throws Exception{
 
         if(quizDocumentId == "")
         {
@@ -51,6 +54,11 @@ public class QuestionDataBase implements QuizDataBaseInterface{
                         public void onSuccess(DocumentReference documentReference) {
                             //DataAddedSuccessfully = true;
                             isAddingToDataBase = false;
+                            if (context != null)
+                            {
+                                Intent goToHomeScreen = new Intent(context, LectureHomeActivity.class);
+                                context.startActivity(goToHomeScreen);
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -62,10 +70,7 @@ public class QuestionDataBase implements QuizDataBaseInterface{
                         }
                     });
 
-            while (isAddingToDataBase == true)
-            {
 
-            }
 
         }
         catch (Exception e)

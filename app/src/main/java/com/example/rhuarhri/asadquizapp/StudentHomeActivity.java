@@ -49,6 +49,8 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
 
     @Override
     public void handleResult(Result result) {
-
+        Intent goToAnswerQuizActivity = new Intent(getApplicationContext(), AnswerQuizActivity.class);
+        goToAnswerQuizActivity.putExtra("id", result.getText());
+        startActivity(goToAnswerQuizActivity);
     }
 }

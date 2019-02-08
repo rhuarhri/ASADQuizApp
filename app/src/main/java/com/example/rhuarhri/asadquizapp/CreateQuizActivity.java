@@ -73,9 +73,10 @@ public class CreateQuizActivity extends AppCompatActivity {
 
                 saveNewQuiz();
 
+                /*
                 Intent addQuestionScreen = new Intent(getApplicationContext(), CreateQuestionActivity.class);
                 addQuestionScreen.putExtra("ID", QuizID);
-                startActivity(addQuestionScreen);
+                startActivity(addQuestionScreen);*/
 
             }
         });
@@ -93,7 +94,7 @@ public class CreateQuizActivity extends AppCompatActivity {
 
         newQuiz.setDescription(quizDescription);
 
-        String error = quizManger.add(newQuiz, null);
+        String error = quizManger.add(newQuiz, null, getApplicationContext());
 
         if(error != "") {
             Toast.makeText(CreateQuizActivity.this, "ERROR: " + error, Toast.LENGTH_LONG).show();

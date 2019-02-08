@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class AnswerQuizActivity extends AppCompatActivity {
+
+    String quizId = "";
 
     ProgressBar TimePB;
 
@@ -43,6 +46,13 @@ public class AnswerQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_quiz);
 
+        Intent fromQRScanner = getIntent();
+        Bundle sentData = fromQRScanner.getExtras();
+        if(sentData != null)
+        {
+            quizId = (String) sentData.get("id");
+        }
+
         TimePB = findViewById(R.id.timerPB);
 
         questionTXT = findViewById(R.id.questionTXT);
@@ -58,7 +68,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         CBTN = findViewById(R.id.CBTN);
         DBTN = findViewById(R.id.DBTN);
 
-        QuizRunning = new RunQuizController("EVEKNRGGP35kYsxh1za8",  questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT, TimePB, RightAnswerTXT);
+        QuizRunning = new RunQuizController(quizId,  questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT, TimePB, RightAnswerTXT);
 
 
         QuizRunning.startQuestion();

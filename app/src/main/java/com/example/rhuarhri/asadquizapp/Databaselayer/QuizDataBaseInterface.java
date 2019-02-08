@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ public interface QuizDataBaseInterface {
     effects the QuizDataBase, QuestionDataBase, RunQuizDB classes
      */
 
-    void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion) throws Exception;
+    void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion, Context context) throws Exception;
 
     void getAllQuizzes(final RecyclerView QuizRV) throws Exception;
 

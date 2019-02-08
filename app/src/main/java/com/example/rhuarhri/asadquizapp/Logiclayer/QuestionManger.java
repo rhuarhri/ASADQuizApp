@@ -1,5 +1,6 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
+import android.content.Context;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,7 +81,7 @@ public class QuestionManger implements QuizMangerInterface{
     }
 
     @Override
-    public String Update(quiz newQuiz, question newQuestion) {
+    public String Update(quiz newQuiz, question newQuestion, Context context) {
         String error = checkForErrors(newQuestion);
 
         return error;
@@ -100,7 +101,7 @@ public class QuestionManger implements QuizMangerInterface{
     }
 
     @Override
-    public String add(quiz newQuiz, question newQuestion) {
+    public String add(quiz newQuiz, question newQuestion, Context context) {
         String error = checkForErrors(newQuestion);
 
         if (error != "")
@@ -111,7 +112,7 @@ public class QuestionManger implements QuizMangerInterface{
         try {
 
 
-            QuestionDB.Add(QuizName, null, newQuestion);
+            QuestionDB.Add(QuizName, null, newQuestion, context);
 
 
         }

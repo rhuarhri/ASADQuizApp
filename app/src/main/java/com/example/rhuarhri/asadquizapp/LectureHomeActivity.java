@@ -59,6 +59,7 @@ public class LectureHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent gotoStudentAccess = new Intent(getApplicationContext(), studentAccessActivity.class);
+                gotoStudentAccess.putExtra("id", "EVEKNRGGP35kYsxh1za8");
                 startActivity(gotoStudentAccess);
             }
         });

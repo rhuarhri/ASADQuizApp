@@ -16,7 +16,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class studentAccessActivity extends AppCompatActivity {
 
-    String QRInfo = "EVEKNRGGP35kYsxh1za8";
+    String QRInfo = "";
     Bitmap QRCode;
 
     ImageView quizIDQRDisplay;
@@ -26,6 +26,13 @@ public class studentAccessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_access);
+
+        Intent fromLectureHome = getIntent();
+        Bundle sentData = fromLectureHome.getExtras();
+        if(sentData != null)
+        {
+            QRInfo = (String) sentData.get("id");
+        }
 
         quizIDQRDisplay = (ImageView) findViewById(R.id.QuizIDQRIV);
         runBTN = (Button) findViewById(R.id.runQuizBTN);

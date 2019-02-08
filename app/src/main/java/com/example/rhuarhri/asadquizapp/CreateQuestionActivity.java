@@ -206,15 +206,14 @@ public class CreateQuestionActivity extends AppCompatActivity {
         saveQuestionBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String error = questionManger.add(null, newQuestion);
+                String error = questionManger.add(null, newQuestion, getApplicationContext());
 
                 if (error != "")
                 {
                     Toast.makeText(getApplicationContext(), "ERROR: " + error, Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Intent goToHomeScreen = new Intent(getApplicationContext(), LectureHomeActivity.class);
-                    startActivity(goToHomeScreen);
+
                 }
             }
         });
