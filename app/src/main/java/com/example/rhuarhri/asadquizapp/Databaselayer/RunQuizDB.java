@@ -72,14 +72,25 @@ public class RunQuizDB implements QuizDataBaseInterface {
                                     QuestionDocumentID = document.getId().toString();
                                     question currentQuestion = document.toObject(question.class);
                                     if (currentQuestion != null) {
-                                        questionTXT.setText(currentQuestion.getQuestion());
-                                        answerATXT.setText("A: " + currentQuestion.getAnswerA());
-                                        answerBTXT.setText("B: " + currentQuestion.getAnswerB());
-                                        answerCTXT.setText("C: " + currentQuestion.getAnswerC());
-                                        answerDTXT.setText("D: " + currentQuestion.getAnswerD());
+                                        /*
+                                        This is necessary as this function is used in multiple places
+                                        so the following variables need to be checked
+                                         */
+                                        if (questionTXT != null){
+                                        questionTXT.setText(currentQuestion.getQuestion());}
+                                        if(answerATXT != null){
+                                        answerATXT.setText("A: " + currentQuestion.getAnswerA());}
+                                        if(answerBTXT != null){
+                                        answerBTXT.setText("B: " + currentQuestion.getAnswerB());}
+                                        if(answerCTXT != null){
+                                        answerCTXT.setText("C: " + currentQuestion.getAnswerC());}
+                                        if(answerDTXT != null){
+                                        answerDTXT.setText("D: " + currentQuestion.getAnswerD());}
 
-                                        RQC = new RunQuizController();
-                                        RQC.startQuestionTimer(currentQuestion.getTime(), TimerPB);
+                                        if(TimerPB != null) {
+                                            RQC = new RunQuizController();
+                                            RQC.startQuestionTimer(currentQuestion.getTime(), TimerPB);
+                                        }
 
                                     }
                                 }
