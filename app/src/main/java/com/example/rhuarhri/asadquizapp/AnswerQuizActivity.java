@@ -48,8 +48,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
 
         Intent fromQRScanner = getIntent();
         Bundle sentData = fromQRScanner.getExtras();
-        if(sentData != null)
-        {
+        if (sentData != null) {
             quizId = (String) sentData.get("id");
         }
 
@@ -68,7 +67,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         CBTN = findViewById(R.id.CBTN);
         DBTN = findViewById(R.id.DBTN);
 
-        QuizRunning = new RunQuizController(quizId,  questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT, TimePB, RightAnswerTXT);
+        QuizRunning = new RunQuizController(quizId, questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT, TimePB, RightAnswerTXT);
 
 
         QuizRunning.startQuestion();
@@ -105,35 +104,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         });
 
 
+    }
 }
 
-    public void getQuestion()
-    {
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("quizzes").document("EVEKNRGGP35kYsxh1za8")
-                .collection("questions").get()
-        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult())  {
-                        question currentQuestion = document.toObject(question.class);
-                        if (currentQuestion != null) {
-                            questionTXT.setText(currentQuestion.getQuestion());
-                            answerATXT.setText(currentQuestion.getAnswerA());
-                            answerBTXT.setText(currentQuestion.getAnswerB());
-                            answerCTXT.setText(currentQuestion.getAnswerC());
-                            answerDTXT.setText(currentQuestion.getAnswerD());
-
-
-                        }
-                    }
-            }}
-        });
-
-    }
-
-    }
 

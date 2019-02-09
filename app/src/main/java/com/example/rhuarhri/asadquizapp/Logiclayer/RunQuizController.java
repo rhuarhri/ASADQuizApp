@@ -34,18 +34,10 @@ public class RunQuizController implements QuizMangerInterface {
     public RunQuizController(String quizID, TextView questionTXT, TextView answerATXT, TextView answerBTXT, TextView answerCTXT, TextView answerDTXT, ProgressBar timerPB, TextView rightAnswerTXT)
     {
 
-        RunningQuiz = new RunQuizDB();
+        RunningQuiz = new RunQuizDB(quizID, questionTXT, answerATXT, answerBTXT,
+                answerCTXT, answerDTXT, timerPB, rightAnswerTXT);
 
-        QuizID = quizID;
-        QuestionTXT = questionTXT;
-        AnswerATXT = answerATXT;
-        AnswerBTXT = answerBTXT;
-        AnswerCTXT = answerCTXT;
-        AnswerDTXT = answerDTXT;
 
-        RightAnswerTXT = rightAnswerTXT;
-
-        TimerPB = timerPB;
     }
 
     @Override
@@ -79,56 +71,16 @@ public class RunQuizController implements QuizMangerInterface {
     @Override
     public void startQuestion()
     {
-        RunningQuiz.getQuestion(QuizID, QuestionTXT, AnswerATXT, AnswerBTXT, AnswerCTXT, AnswerDTXT, TimerPB);
+        RunningQuiz.getQuestion();
     }
 
     @Override
     public void endQuestion(String answer)
     {
-        RunningQuiz.checkAnswer(answer, QuizID, RightAnswerTXT);
-        RunningQuiz.setNextQuestion();
-        //start new question
-        startQuestion();
-    }
-
-
-    @Override
-    public void startQuestionTimer(int time, final ProgressBar timerPB)
-    {
-
-        long timeInMS = (time * 1000);
-
-        timerPB.setMax((int) timeInMS);
-
-        questionTimer = new CountDownTimer(timeInMS, 1000)
-        {
-
-            @Override
-            public void onTick(long timeToFinish) {
-                timerPB.setProgress((int) timeToFinish);
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        }.start();
-
+        RunningQuiz.checkAnswer(answer);
 
     }
 
-    @Override
-    public void stopQuestionTimer()
-    {
-        try {
-            questionTimer.cancel();
-        }
-        catch(Exception e)
-        {
-            /*in case the question eds because the timer runs out
-            and an error could occur if the timer s stop when it is already stopped
-             */
-        }
-    }
+
 
 }

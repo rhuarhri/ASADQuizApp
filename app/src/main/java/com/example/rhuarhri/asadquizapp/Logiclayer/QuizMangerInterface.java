@@ -26,8 +26,6 @@ public interface QuizMangerInterface {
 
     public void endQuestion(String answer);
 
-    void startQuestionTimer(int time, final ProgressBar timerPB);
 
-    void stopQuestionTimer();
 
 }

@@ -1,6 +1,7 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -24,11 +25,32 @@ import java.util.List;
 public class RunQuizDB implements QuizDataBaseInterface {
 
     int nextQuestion;
-    RunQuizController RQC;
+    CountDownTimer questionTimer;
     String QuestionDocumentID = "";
 
-    public RunQuizDB()
+    String QuizID;
+    TextView questionTXT;
+    TextView answerATXT;
+    TextView answerBTXT;
+    TextView answerCTXT;
+    TextView answerDTXT;
+    ProgressBar TimerPB;
+    TextView rightAnswerTXT;
+
+
+
+    public RunQuizDB(String quizID, TextView QuestionTXT, TextView AnswerATXT, TextView AnswerBTXT,
+                     TextView AnswerCTXT, TextView AnswerDTXT, ProgressBar timerPB, TextView RightAnswerTXT)
     {
+        QuizID = quizID;
+        questionTXT = QuestionTXT;
+        answerATXT = AnswerATXT;
+        answerBTXT = AnswerBTXT;
+        answerCTXT = AnswerCTXT;
+        answerDTXT = AnswerDTXT;
+        TimerPB = timerPB;
+        rightAnswerTXT = RightAnswerTXT;
+
         nextQuestion = 0;
     }
 
@@ -56,7 +78,7 @@ public class RunQuizDB implements QuizDataBaseInterface {
     }
 
     @Override
-    public void getQuestion(String QuizID, final TextView questionTXT, final TextView answerATXT, final TextView answerBTXT, final TextView answerCTXT, final TextView answerDTXT, final ProgressBar TimerPB) {
+    public void getQuestion() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -89,8 +111,7 @@ public class RunQuizDB implements QuizDataBaseInterface {
                                         answerDTXT.setText("D: " + currentQuestion.getAnswerD());}
 
                                         if(TimerPB != null) {
-                                            RQC = new RunQuizController();
-                                            RQC.startQuestionTimer(currentQuestion.getTime(), TimerPB);
+                                            startQuestionTimer(currentQuestion.getTime(), TimerPB);
                                         }
 
                                     }
@@ -123,7 +144,8 @@ public class RunQuizDB implements QuizDataBaseInterface {
     }
 
     @Override
-    public void checkAnswer(final String answer, String QuizID, final TextView rightAnswerTXT) {
+    public void checkAnswer(final String answer) {
+
 
         if(answer == "")
         {
@@ -132,7 +154,15 @@ public class RunQuizDB implements QuizDataBaseInterface {
         }
         else {
 
-            RQC.stopQuestionTimer();
+            try {
+                questionTimer.cancel();
+            }
+            catch(Exception e)
+            {
+            /*in case the question eds because the timer runs out
+            and an error could occur if the timer s stop when it is already stopped
+             */
+            }
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -166,13 +196,38 @@ public class RunQuizDB implements QuizDataBaseInterface {
                                     questionIterator++;
                                 }
                             }
+
+                            nextQuestion++;
+                            getQuestion();
+
                         }
                     });
         }
     }
 
-    public void setNextQuestion()
+
+
+    private void startQuestionTimer(int time, final ProgressBar timerPB)
     {
-        nextQuestion++;
+        long timeInMS = (time * 1000);
+
+        timerPB.setMax((int) timeInMS);
+
+        questionTimer = new CountDownTimer(timeInMS, 1000)
+        {
+
+            @Override
+            public void onTick(long timeToFinish) {
+                timerPB.setProgress((int) timeToFinish);
+            }
+
+            @Override
+            public void onFinish() {
+                rightAnswerTXT.setText("wrong");
+            }
+        }.start();
+
     }
+
+
 }

@@ -139,15 +139,7 @@ public class QuestionManger implements QuizMangerInterface{
         //Not implemented here
     }
 
-    @Override
-    public void startQuestionTimer(int time, ProgressBar timerPB) {
-        //Not implemented here
-    }
 
-    @Override
-    public void stopQuestionTimer() {
-        //Not implemented here
-    }
 
 
 }

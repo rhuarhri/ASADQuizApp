@@ -1,5 +1,5 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
-
+/*
 public interface QuestionMangerInterface {
 
     void setQuestion(String question);
@@ -29,4 +29,4 @@ public interface QuestionMangerInterface {
     boolean checkIfAnswerCorrect(String id);
 
     String saveQuestion();
-}
+}*/

@@ -1,5 +1,5 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
-
+/*
 import android.widget.TextView;
 
 public interface RunQuizInterface {
@@ -10,4 +10,4 @@ public interface RunQuizInterface {
 
 
 
-}
+}*/

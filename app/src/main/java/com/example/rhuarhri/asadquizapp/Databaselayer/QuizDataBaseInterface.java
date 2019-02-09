@@ -26,9 +26,9 @@ public interface QuizDataBaseInterface {
 
     String getQuizDocumentID(boolean newToDataBase, String QuizName);
 
-    void getQuestion(String QuizID, final TextView questionTXT, final TextView answerATXT, final TextView answerBTXT, final TextView answerCTXT, final TextView answerDTXT, final ProgressBar TimerPB);
+    void getQuestion();
 
-    void checkAnswer(String answer, String QuizID, TextView rightAnswerTXT);
+    void checkAnswer(String answer);
 
 
 }

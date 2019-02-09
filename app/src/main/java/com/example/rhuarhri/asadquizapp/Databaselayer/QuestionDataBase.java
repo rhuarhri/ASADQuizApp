@@ -168,13 +168,13 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public void getQuestion(String QuizID, final TextView questionTXT, final TextView answerATXT, final TextView answerBTXT, final TextView answerCTXT, final TextView answerDTXT, final ProgressBar TimerPB)
+    public void getQuestion()
     {
         //Not implemented here
     }
 
     @Override
-    public void checkAnswer(String answer, String QuizID, TextView rightAnswerTXT) {
+    public void checkAnswer(String answer) {
         //Not implemented here
     }
 }
