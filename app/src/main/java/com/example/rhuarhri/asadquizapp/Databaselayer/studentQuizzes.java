@@ -46,7 +46,7 @@ public class studentQuizzes implements QuizDataBaseInterface {
 
         List<String> allQuizID = new ArrayList<>();
 
-        quizAccessDB accessableQuizzes = Room.databaseBuilder(context, quizAccessDB.class, "quizIdDB").build();
+        quizAccessDB accessableQuizzes = Room.databaseBuilder(context, quizAccessDB.class, "quizIdDB").allowMainThreadQueries().build();
 
         List<storedQuizId> data = accessableQuizzes.storedQuizzes().getAll();
 
@@ -65,7 +65,7 @@ public class studentQuizzes implements QuizDataBaseInterface {
 
         newQuiz.setQuizId(quizId);
 
-        quizAccessDB accessableQuizzes = Room.databaseBuilder(context, quizAccessDB.class, "quizIdDB").build();
+        quizAccessDB accessableQuizzes = Room.databaseBuilder(context, quizAccessDB.class, "quizIdDB").allowMainThreadQueries().build();
 
         accessableQuizzes.storedQuizzes().add(newQuiz);
 
@@ -78,7 +78,7 @@ public class studentQuizzes implements QuizDataBaseInterface {
 
         oldQuiz.setQuizId(quizId);
 
-        quizAccessDB accessableQuizzes = Room.databaseBuilder(context, quizAccessDB.class, "quizIdDB").build();
+        quizAccessDB accessableQuizzes = Room.databaseBuilder(context, quizAccessDB.class, "quizIdDB").allowMainThreadQueries().build();
 
         accessableQuizzes.storedQuizzes().delete(oldQuiz);
 

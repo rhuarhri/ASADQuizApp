@@ -91,6 +91,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
     public void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture) throws Exception{
 
 
+
         if (isLecture == false)
         {
             //is a student
