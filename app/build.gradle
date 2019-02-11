@@ -35,6 +35,13 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     //you may need to comment out multidex below if it does not run
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation "android.arch.persistence.room:runtime:$rootProject.archRoomVersion"
+
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archRoomVersion"
+
 }
 
 apply plugin: 'com.google.gms.google-services'

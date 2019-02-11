@@ -177,4 +177,19 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     public void checkAnswer(String answer) {
         //Not implemented here
     }
+
+    @Override
+    public List<String> getAllStudentsQuizzes(Context context) {
+        return null;
+    }
+
+    @Override
+    public void addQuizForStudent(String quizId, Context context) {
+
+    }
+
+    @Override
+    public void removeQuizFromStudent(String quizId, Context context) {
+
+    }
 }

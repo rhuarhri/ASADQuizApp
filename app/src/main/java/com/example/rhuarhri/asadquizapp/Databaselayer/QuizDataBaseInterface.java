@@ -30,5 +30,10 @@ public interface QuizDataBaseInterface {
 
     void checkAnswer(String answer);
 
+    List<String> getAllStudentsQuizzes(Context context);
+
+    void addQuizForStudent(String quizId, Context context);
+
+    void removeQuizFromStudent(String quizId, Context context);
 
 }

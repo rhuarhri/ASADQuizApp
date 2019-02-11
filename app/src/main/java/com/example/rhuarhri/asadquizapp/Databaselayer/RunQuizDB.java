@@ -205,6 +205,20 @@ public class RunQuizDB implements QuizDataBaseInterface {
         }
     }
 
+    @Override
+    public List<String> getAllStudentsQuizzes(Context context) {
+        return null;
+    }
+
+    @Override
+    public void addQuizForStudent(String quizId, Context context) {
+
+    }
+
+    @Override
+    public void removeQuizFromStudent(String quizId, Context context) {
+
+    }
 
 
     private void startQuestionTimer(int time, final ProgressBar timerPB)

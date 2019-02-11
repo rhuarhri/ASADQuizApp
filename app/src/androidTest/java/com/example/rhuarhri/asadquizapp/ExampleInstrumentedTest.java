@@ -64,7 +64,7 @@ public class ExampleInstrumentedTest {
         /*
         This test creates a random password and name and uses them to try and access
         the app.
-        It should fail all of the time, however their is the slim chance that it could generate the
+        It should fail all of the time, however there is the slim chance that it could generate the
         right name and password
 
          */
@@ -91,11 +91,17 @@ public class ExampleInstrumentedTest {
 
         Espresso.onView(withId(R.id.LoginBTN)).perform(click());
 
-        Espresso.onView(withId(R.id.TitleTXT)).check(matches(withText("login failed")));
         /*
-        This test will most likely fail as the did not wait for the result to come from the data base
-        before checking
+        This pauses the test for 5 seconds giving the app time to check the data base
          */
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Espresso.onView(withId(R.id.TitleTXT)).check(matches(withText("login failed")));
+
 
     }
 
@@ -105,6 +111,10 @@ public class ExampleInstrumentedTest {
     @Test
     public void addLecture()
     {
+        /*
+        This test adds a new user to the data base
+         */
+
         String name = "fred";
         String password = "567";
 
@@ -113,6 +123,15 @@ public class ExampleInstrumentedTest {
         Espresso.onView(withId(R.id.passwordET)).perform(typeText(password));
 
         Espresso.onView(withId(R.id.signUpBTN)).perform(click());
+
+        /*
+        This pauses the test for 5 seconds giving the app time to check the data base
+         */
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Espresso.onView(withId(R.id.TitleTXT)).check(matches(withText("successful")));
 
@@ -126,6 +145,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void addQuiz()
     {
+
         String QuizName = "Test name";
         String QuizDescription = "Test description";
 
@@ -159,6 +179,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void addEmptyQuiz()
     {
+
         String QuizName = "";
         String QuizDescription = "";
 
@@ -438,6 +459,44 @@ public class ExampleInstrumentedTest {
 
     }
 
+    @Test
+    public void refusingToAnswerTheQuestion()
+    {
+        //Expected results
+        String answerCorrect = "wrong";
+
+        String quizId = "EVEKNRGGP35kYsxh1za8";
+
+
+        TextView rightAnswerTV = AnswerQuizAct.getActivity().RightAnswerTXT;
+        ProgressBar timePB = AnswerQuizAct.getActivity().TimePB;
+        //used but not tested here
+        TextView questionTV = AnswerQuizAct.getActivity().questionTXT;
+        TextView answerATV = AnswerQuizAct.getActivity().answerATXT;
+        TextView answerBTV = AnswerQuizAct.getActivity().answerBTXT;
+        TextView answerCTV = AnswerQuizAct.getActivity().answerCTXT;
+        TextView answerDTV = AnswerQuizAct.getActivity().answerDTXT;
+
+
+
+
+        RunQuizController RQC = new RunQuizController(quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
+
+        RQC.startQuestion();
+
+        /*
+        This pauses the test for 61 seconds the question's timer should only last about 60 seconds
+        which should cause the timer to run out and the student should ge the question wrong
+         */
+        try {
+            Thread.sleep(61000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(answerCorrect, rightAnswerTV.getText().toString());
+    }
+
 
 
     @Test
@@ -489,12 +548,15 @@ public class ExampleInstrumentedTest {
     }
 
 
+    @Test
+    public void checkLeaderBoard()
+    {
+        //not yet implemented
+    }
 
 
 
 
 
-    /*add various other tests about the lecture running the quiz
-    and the students getting results
-     */
+
 }

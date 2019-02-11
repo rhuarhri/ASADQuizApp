@@ -29,7 +29,8 @@
         <activity android:name=".AnswerQuizActivity" />
         <activity android:name=".studentAccessActivity" />
         <activity android:name=".LectureQuizManagerActivity" />
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".quizResultsActivity"></activity>
     </application>
 
 </manifest>
