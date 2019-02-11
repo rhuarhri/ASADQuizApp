@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.rhuarhri.asadquizapp.Databaselayer.studentQuizzes;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -27,6 +28,10 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
         testBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                studentQuizzes newQuiz = new studentQuizzes();
+
+                newQuiz.addQuizForStudent("EVEKNRGGP35kYsxh1za8", getApplicationContext());
+
                 Intent goToAnswerQuizActivity = new Intent(getApplicationContext(), AnswerQuizActivity.class);
                 goToAnswerQuizActivity.putExtra("id", "EVEKNRGGP35kYsxh1za8");
                 startActivity(goToAnswerQuizActivity);
@@ -50,6 +55,12 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
 
     @Override
     public void handleResult(Result result) {
+
+        studentQuizzes newQuiz = new studentQuizzes();
+
+        newQuiz.addQuizForStudent(result.getText().toString(), getApplicationContext());
+
+
         Intent goToAnswerQuizActivity = new Intent(getApplicationContext(), AnswerQuizActivity.class);
         goToAnswerQuizActivity.putExtra("id", result.getText());
         startActivity(goToAnswerQuizActivity);

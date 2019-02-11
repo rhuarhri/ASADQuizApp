@@ -88,18 +88,22 @@ public class QuizDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public void getAllQuizzes(final RecyclerView QuizRV) throws Exception{
+    public void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture) throws Exception{
 
 
+        if (isLecture == false)
+        {
+            //is a student
+            for (int i = 0; i < listOfQuizIDs.size(); i++)
+            {
+                try {
 
-        try {
-
-            db.collection("quizzes").get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection("quizzes").document(listOfQuizIDs.get(i).toString()).get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult())  {
+                                DocumentSnapshot document = task.getResult();
                                     quiz currentQuiz = document.toObject(quiz.class);
                                     if (currentQuiz != null) {
                                         existingQuizzes.add(currentQuiz);
@@ -111,14 +115,45 @@ public class QuizDataBase implements QuizDataBaseInterface{
                                 QuizRV.setAdapter(quizListAdapter);
                             }
                         }
-                    });
-            /**/
+                    );
 
 
+
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
         }
-        catch (Exception e)
-        {
+        else {
 
+            try {
+
+                db.collection("quizzes").get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        quiz currentQuiz = document.toObject(quiz.class);
+                                        if (currentQuiz != null) {
+                                            existingQuizzes.add(currentQuiz);
+                                        }
+                                    }
+
+                                    RecyclerView.Adapter quizListAdapter = new questionRVAdapter(existingQuizzes);
+
+                                    QuizRV.setAdapter(quizListAdapter);
+                                }
+                            }
+                        });
+                /**/
+
+
+            } catch (Exception e) {
+
+            }
         }
 
 

@@ -20,7 +20,7 @@ public interface QuizDataBaseInterface {
 
     void Add(String quizDocumentId, quiz AddQuiz, question AddQuestion, Context context) throws Exception;
 
-    void getAllQuizzes(final RecyclerView QuizRV) throws Exception;
+    void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture) throws Exception;
 
     List<question> getAllQuestions(String quizDocumentId) throws Exception;
 

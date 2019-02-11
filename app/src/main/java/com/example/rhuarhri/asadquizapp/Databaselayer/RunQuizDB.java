@@ -61,7 +61,7 @@ public class RunQuizDB implements QuizDataBaseInterface {
     }
 
     @Override
-    public void getAllQuizzes(RecyclerView QuizRV) throws Exception {
+    public void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture) throws Exception {
         //Not implemented here
     }
 

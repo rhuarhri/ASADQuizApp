@@ -33,7 +33,7 @@ public class LectureHomeActivity extends AppCompatActivity {
         QuizDataBase QuizBD = new QuizDataBase();
 
         try {
-            QuizBD.getAllQuizzes(questionListRV);
+            QuizBD.getAllQuizzes(null, questionListRV, true);
         }
         catch(Exception e)
         {

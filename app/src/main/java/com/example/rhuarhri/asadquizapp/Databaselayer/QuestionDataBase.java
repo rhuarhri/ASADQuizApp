@@ -84,7 +84,7 @@ public class QuestionDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public void getAllQuizzes(RecyclerView quizRV) {
+    public void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture) {
         //not implemented here
 
 
