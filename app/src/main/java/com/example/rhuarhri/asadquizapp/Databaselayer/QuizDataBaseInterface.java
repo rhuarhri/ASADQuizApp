@@ -30,6 +30,8 @@ public interface QuizDataBaseInterface {
 
     void checkAnswer(String answer);
 
+    void getLeaderBoard(final RecyclerView LBRV);
+
     List<String> getAllStudentsQuizzes(Context context);
 
     void addQuizForStudent(String quizId, Context context);

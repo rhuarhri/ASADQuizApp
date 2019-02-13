@@ -31,10 +31,10 @@ public class RunQuizController implements QuizMangerInterface {
 
     }
 
-    public RunQuizController(String quizID, TextView questionTXT, TextView answerATXT, TextView answerBTXT, TextView answerCTXT, TextView answerDTXT, ProgressBar timerPB, TextView rightAnswerTXT)
+    public RunQuizController(Context appContext, String StudentName, String quizID, TextView questionTXT, TextView answerATXT, TextView answerBTXT, TextView answerCTXT, TextView answerDTXT, ProgressBar timerPB, TextView rightAnswerTXT)
     {
 
-        RunningQuiz = new RunQuizDB(quizID, questionTXT, answerATXT, answerBTXT,
+        RunningQuiz = new RunQuizDB(appContext, StudentName, quizID, questionTXT, answerATXT, answerBTXT,
                 answerCTXT, answerDTXT, timerPB, rightAnswerTXT);
 
 
@@ -78,6 +78,7 @@ public class RunQuizController implements QuizMangerInterface {
     public void endQuestion(String answer)
     {
         RunningQuiz.checkAnswer(answer);
+
 
     }
 

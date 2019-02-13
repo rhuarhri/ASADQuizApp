@@ -35,7 +35,7 @@ public class UserDatabase implements userDataBaseInterface {
     }
 
     @Override
-    public void checkUser(String name, String password)
+    public void checkUser(final String name, String password)
     {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -55,7 +55,7 @@ public class UserDatabase implements userDataBaseInterface {
                 else
                 {
                     //Is a user
-                    errorTXT.setText("login successful");
+                    errorTXT.setText("Welcome " + name);
                     if (context != null)
                     {
                         Intent goToLectureHomeScreen = new Intent(context, LectureHomeActivity.class);

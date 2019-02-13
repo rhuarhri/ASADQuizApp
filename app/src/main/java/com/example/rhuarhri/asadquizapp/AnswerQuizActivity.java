@@ -21,6 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class AnswerQuizActivity extends AppCompatActivity {
 
+    String studentName = "ted";
     String quizId = "";
 
     ProgressBar TimePB;
@@ -67,7 +68,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         CBTN = findViewById(R.id.CBTN);
         DBTN = findViewById(R.id.DBTN);
 
-        QuizRunning = new RunQuizController(quizId, questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT, TimePB, RightAnswerTXT);
+        QuizRunning = new RunQuizController(getApplicationContext(), studentName, quizId, questionTXT, answerATXT, answerBTXT, answerCTXT, answerDTXT, TimePB, RightAnswerTXT);
 
 
         QuizRunning.startQuestion();

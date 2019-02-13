@@ -213,6 +213,11 @@ public class QuizDataBase implements QuizDataBaseInterface{
     }
 
     @Override
+    public void getLeaderBoard(RecyclerView LBRV) {
+
+    }
+
+    @Override
     public List<String> getAllStudentsQuizzes(Context context) {
         return null;
     }

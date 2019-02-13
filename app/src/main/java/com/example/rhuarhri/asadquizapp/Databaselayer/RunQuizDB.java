@@ -1,6 +1,7 @@
 package com.example.rhuarhri.asadquizapp.Databaselayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,17 +10,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.Logiclayer.RunQuizController;
+import com.example.rhuarhri.asadquizapp.customDataTypes.player;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
+import com.example.rhuarhri.asadquizapp.leaderBoardRVAdapter;
+import com.example.rhuarhri.asadquizapp.questionRVAdapter;
+import com.example.rhuarhri.asadquizapp.quizResultsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RunQuizDB implements QuizDataBaseInterface {
@@ -28,6 +35,8 @@ public class RunQuizDB implements QuizDataBaseInterface {
     CountDownTimer questionTimer;
     String QuestionDocumentID = "";
 
+    Context context;
+    String playerName;
     String QuizID;
     TextView questionTXT;
     TextView answerATXT;
@@ -38,10 +47,16 @@ public class RunQuizDB implements QuizDataBaseInterface {
     TextView rightAnswerTXT;
 
 
+    public RunQuizDB()
+    {
 
-    public RunQuizDB(String quizID, TextView QuestionTXT, TextView AnswerATXT, TextView AnswerBTXT,
+    }
+
+    public RunQuizDB(Context appContext, String PlayerName, String quizID, TextView QuestionTXT, TextView AnswerATXT, TextView AnswerBTXT,
                      TextView AnswerCTXT, TextView AnswerDTXT, ProgressBar timerPB, TextView RightAnswerTXT)
     {
+        context = appContext;
+        playerName = PlayerName;
         QuizID = quizID;
         questionTXT = QuestionTXT;
         answerATXT = AnswerATXT;
@@ -92,9 +107,11 @@ public class RunQuizDB implements QuizDataBaseInterface {
                             int questionIterator = 0;
                             for (QueryDocumentSnapshot document : task.getResult())  {
                                 if (questionIterator == nextQuestion) {
-                                    QuestionDocumentID = document.getId().toString();
-                                    question currentQuestion = document.toObject(question.class);
-                                    if (currentQuestion != null) {
+
+
+                                    //if (task.getResult().size() >= questionIterator) {
+                                        QuestionDocumentID = document.getId().toString();
+                                        question currentQuestion = document.toObject(question.class);
                                         /*
                                         This is necessary as this function is used in multiple places
                                         so the following variables need to be checked
@@ -114,9 +131,24 @@ public class RunQuizDB implements QuizDataBaseInterface {
                                             startQuestionTimer(currentQuestion.getTime(), TimerPB);
                                         }
 
-                                    }
+
+
+                                    /*}
+                                    else
+                                    {
+                                        //end of quiz
+                                        Intent goToLeaderBoard = new Intent(context, quizResultsActivity.class);
+                                        context.startActivity(goToLeaderBoard);
+                                    }*/
                                 }
                                 questionIterator++;
+                            }
+
+                            //no next question found
+                            if (questionIterator != (nextQuestion + 1))
+                            {
+                                Intent goToLeaderBoard = new Intent(context, quizResultsActivity.class);
+                                context.startActivity(goToLeaderBoard);
                             }
                         }}
                 });
@@ -146,23 +178,35 @@ public class RunQuizDB implements QuizDataBaseInterface {
     @Override
     public void checkAnswer(final String answer) {
 
-
-        if(answer == "")
-        {
-            //answer wrong
-            rightAnswerTXT.setText("wrong");
+        try {
+            questionTimer.cancel();
         }
-        else {
-
-            try {
-                questionTimer.cancel();
-            }
-            catch(Exception e)
-            {
+        catch(Exception e)
+        {
             /*in case the question eds because the timer runs out
             and an error could occur if the timer s stop when it is already stopped
              */
+        }
+
+        //if the answer is "" this means that a lecturer has answered
+        if(answer == "")
+        {
+            //answer wrong
+            if(rightAnswerTXT != null) {
+                rightAnswerTXT.setText("wrong");
             }
+            questionTXT.setText("question answered");
+
+            nextQuestion++;
+
+
+
+            getQuestion();
+
+        }
+        else {
+
+
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -184,11 +228,24 @@ public class RunQuizDB implements QuizDataBaseInterface {
 
                                             if (currentQuestion.getRightAnswer().equals(answer) == true) {
                                                 //answer correct
-                                                rightAnswerTXT.setText("correct");
+                                                if(rightAnswerTXT != null) {
+                                                    rightAnswerTXT.setText("correct");
+                                                    addScore("ted");
+                                                }
                                             } else {
                                                 //answer wrong
-                                                rightAnswerTXT.setText("wrong");
+                                                if (rightAnswerTXT != null) {
+                                                    rightAnswerTXT.setText("wrong");
+                                                }
                                             }
+
+
+
+                                            nextQuestion++;
+
+
+
+                                            getQuestion();
 
 
                                         }
@@ -197,13 +254,77 @@ public class RunQuizDB implements QuizDataBaseInterface {
                                 }
                             }
 
-                            nextQuestion++;
-                            getQuestion();
+
+
 
                         }
                     });
         }
+
     }
+
+    final List<player> currentplayersList = new ArrayList<>();
+
+    @Override
+    public void getLeaderBoard(final RecyclerView LBRV) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("leaderboard").orderBy("name", Query.Direction.DESCENDING).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                player foundPlayer = document.toObject(player.class);
+                                if (foundPlayer != null) {
+                                    currentplayersList.add(foundPlayer);
+                                }
+                            }
+
+                            RecyclerView.Adapter leaderBoardRVAdapter = new leaderBoardRVAdapter(currentplayersList);
+
+                            LBRV.setAdapter(leaderBoardRVAdapter);
+                        }
+                    }
+                });
+
+    }
+
+    private void addScore(String name)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("leaderboard").whereEqualTo("name", name).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                player foundPlayer = document.toObject(player.class);
+
+                                int score = foundPlayer.getScore();
+
+                                FirebaseFirestore updatedb = FirebaseFirestore.getInstance();
+                                updatedb.collection("leaderboard").document(document.getId())
+                                        .update("score", (score + 10)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                    }
+                                });
+                            }
+                        }
+                            }
+                    }
+                );
+
+    }
+
+
 
     @Override
     public List<String> getAllStudentsQuizzes(Context context) {
@@ -237,7 +358,14 @@ public class RunQuizDB implements QuizDataBaseInterface {
 
             @Override
             public void onFinish() {
-                rightAnswerTXT.setText("wrong");
+                if (rightAnswerTXT != null)
+                {rightAnswerTXT.setText("wrong");}
+
+                nextQuestion++;
+
+
+
+                getQuestion();
             }
         }.start();
 

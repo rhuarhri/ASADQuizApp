@@ -109,7 +109,7 @@ public class ExampleInstrumentedTest {
     public ActivityTestRule<LoginActivity> SignInAct = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
-    public void addLecture()
+    public void addLecturer()
     {
         /*
         This test adds a new user to the data base
@@ -419,7 +419,8 @@ public class ExampleInstrumentedTest {
 
         ProgressBar timePB = AnswerQuizAct.getActivity().TimePB;
 
-        RunQuizController RQC = new RunQuizController(quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
+        RunQuizController RQC = new RunQuizController(AnswerQuizAct.getActivity().getApplicationContext(), "ted",
+                quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
 
         RQC.startQuestion();
 
@@ -430,7 +431,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void answerQuestionInCorrectly()
+    public void answerQuestionIncorrectly()
     {
         //Expected results
         String answerCorrect = "wrong";
@@ -449,8 +450,8 @@ public class ExampleInstrumentedTest {
 
         ProgressBar timePB = AnswerQuizAct.getActivity().TimePB;
 
-        RunQuizController RQC = new RunQuizController(quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
-
+        RunQuizController RQC = new RunQuizController(AnswerQuizAct.getActivity().getApplicationContext(), "ted",
+                quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
         RQC.startQuestion();
 
         RQC.endQuestion("B");
@@ -477,10 +478,8 @@ public class ExampleInstrumentedTest {
         TextView answerCTV = AnswerQuizAct.getActivity().answerCTXT;
         TextView answerDTV = AnswerQuizAct.getActivity().answerDTXT;
 
-
-
-
-        RunQuizController RQC = new RunQuizController(quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
+        RunQuizController RQC = new RunQuizController(AnswerQuizAct.getActivity().getApplicationContext(), "ted",
+                quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
 
         RQC.startQuestion();
 
@@ -527,7 +526,8 @@ public class ExampleInstrumentedTest {
 
         ProgressBar timePB = AnswerQuizAct.getActivity().TimePB;
 
-        RunQuizController RQC = new RunQuizController(quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
+        RunQuizController RQC = new RunQuizController(AnswerQuizAct.getActivity().getApplicationContext(), "ted",
+                quizId, questionTV, answerATV, answerBTV, answerCTV, answerDTV, timePB, rightAnswerTV);
 
         RQC.startQuestion();
 
@@ -548,11 +548,6 @@ public class ExampleInstrumentedTest {
     }
 
 
-    @Test
-    public void checkLeaderBoard()
-    {
-        //not yet implemented
-    }
 
 
 

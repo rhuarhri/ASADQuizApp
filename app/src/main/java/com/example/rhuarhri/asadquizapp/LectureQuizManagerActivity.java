@@ -48,7 +48,7 @@ public class LectureQuizManagerActivity extends AppCompatActivity {
         homeBTN = findViewById(R.id.HomeBTN);
         nextBTN = findViewById(R.id.NextBTN);
 
-        runningQuiz = new RunQuizController(QuizID, questionTXT, AnswerATXT, AnswerBTXT, AnswerCTXT, AnswerDTXT, timePB, RightAnswerTXT);
+        runningQuiz = new RunQuizController(getApplicationContext(), "", QuizID, questionTXT, AnswerATXT, AnswerBTXT, AnswerCTXT, AnswerDTXT, timePB, RightAnswerTXT);
 
         runningQuiz.startQuestion();
 

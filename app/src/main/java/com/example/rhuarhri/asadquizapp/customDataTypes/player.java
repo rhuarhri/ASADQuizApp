@@ -3,6 +3,8 @@ package com.example.rhuarhri.asadquizapp.customDataTypes;
 public class player {
 
     private String name;
+    //not necessary but improves the reuse of code
+    private String password;
     private int score;
 
     public player()
@@ -13,6 +15,7 @@ public class player {
     public player(String Name, int Score)
     {
         name = Name;
+        password = "";
         score = Score;
     }
 
@@ -31,5 +34,13 @@ public class player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
