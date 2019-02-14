@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">ASADQuizApp</string>
+    <string name="leader_board">Leader Board</string>
+    <string name="lecture">lecture</string>
+    <string name="student">Student</string>
+    <string name="welcome_to">Welcome to this quiz app</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="add_password">Add password</string>
+    <string name="add_user_name">Add user name</string>
+    <string name="D_text">D</string>
+    <string name="C_txt">C</string>
+    <string name="B_txt">B</string>
+    <string name="A_txt">A</string>
+    <string name="add_question">Add question</string>
+    <string name="add_image">Add Image</string>
+    <string name="save">Save</string>
+    <string name="answers">Answers</string>
+    <string name="time_constraint">Time constraint</string>
+    <string name="correct_answer">Is answer correct</string>
+    <string name="scan">Scan</string>
+    <string name="create_quiz">Create Quiz</string>
+    <string name="quiz_name">Quiz Name</string>
+    <string name="quiz_description">Quiz description</string>
 </resources>

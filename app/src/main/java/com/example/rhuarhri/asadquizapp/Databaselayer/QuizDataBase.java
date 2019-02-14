@@ -7,11 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.rhuarhri.asadquizapp.AnswerQuizActivity;
 import com.example.rhuarhri.asadquizapp.CreateQuestionActivity;
 import com.example.rhuarhri.asadquizapp.Logiclayer.RunQuizController;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 import com.example.rhuarhri.asadquizapp.questionRVAdapter;
+import com.example.rhuarhri.asadquizapp.studentAccessActivity;
+import com.example.rhuarhri.asadquizapp.studentRVAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -88,7 +91,44 @@ public class QuizDataBase implements QuizDataBaseInterface{
     }
 
     @Override
-    public void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture) throws Exception{
+    public void getQuiz(String name, final boolean isLecturer, final Context context) {
+
+
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("quizzes").whereEqualTo("name", name).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            quiz currentQuiz = document.toObject(quiz.class);
+                            if (currentQuiz != null) {
+                                String quizId = document.getId();
+
+                                if (isLecturer == true)
+                                {
+                                    Intent gotoStudentAccess = new Intent(context, studentAccessActivity.class);
+                                    gotoStudentAccess.putExtra("id", quizId);
+                                    context.startActivity(gotoStudentAccess);
+                                }
+                                else
+                                {
+                                    Intent goToAnswerQuizActivity = new Intent(context, AnswerQuizActivity.class);
+                                    goToAnswerQuizActivity.putExtra("id", quizId);
+                                    context.startActivity(goToAnswerQuizActivity);
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+
+    }
+
+    @Override
+    public void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture, final Context context) throws Exception{
 
 
 
@@ -111,7 +151,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
                                     }
                                 }
 
-                                RecyclerView.Adapter quizListAdapter = new questionRVAdapter(existingQuizzes);
+                                RecyclerView.Adapter quizListAdapter = new studentRVAdapter(existingQuizzes, context);
 
                                 QuizRV.setAdapter(quizListAdapter);
                             }
@@ -143,7 +183,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
                                         }
                                     }
 
-                                    RecyclerView.Adapter quizListAdapter = new questionRVAdapter(existingQuizzes);
+                                    RecyclerView.Adapter quizListAdapter = new questionRVAdapter(existingQuizzes, context);
 
                                     QuizRV.setAdapter(quizListAdapter);
                                 }
@@ -192,7 +232,7 @@ public class QuizDataBase implements QuizDataBaseInterface{
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             QuizDocumentID = "";
-                        }
+                        }1
             });
 
           */

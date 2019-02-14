@@ -1,6 +1,7 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -11,10 +12,10 @@ public interface QuizMangerInterface {
 
     String Update(quiz newQuiz, question newQuestion, Context context);
 
-    void DisplayExistingQuiz(String name);
+    void DisplayExistingQuizzes(RecyclerView quizRV, boolean isLecturer, Context appContext);
 
 
-    String getQuizDocumentID();
+    void getQuiz(String name, boolean isLecturer, Context context);
 
     String add(quiz newQuiz, question newQuestion, Context context);
 

@@ -2,6 +2,7 @@ package com.example.rhuarhri.asadquizapp.Logiclayer;
 
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,15 +48,15 @@ public class RunQuizController implements QuizMangerInterface {
     }
 
     @Override
-    public void DisplayExistingQuiz(String name) {
+    public void DisplayExistingQuizzes(RecyclerView quizRV, boolean isLecturer, Context appContext) {
         //Not implemented here
     }
 
     @Override
-    public String getQuizDocumentID() {
+    public void getQuiz(String name, boolean isLecturer, Context context) {
         //Not implemented here
-        return null;
     }
+
 
     @Override
     public String add(quiz newQuiz, question newQuestion, Context context) {

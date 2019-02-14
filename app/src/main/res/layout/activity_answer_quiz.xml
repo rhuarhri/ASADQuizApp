@@ -13,7 +13,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
-        android:text="Question"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Answer a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTXT" />
@@ -35,7 +33,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Answer b"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answerATXT" />
@@ -45,7 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="answer c"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answerBTXT" />
@@ -57,7 +53,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="answer D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answerCTXT" />
@@ -68,7 +63,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="A"
+        android:text="@string/A_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/BBTN"
         app:layout_constraintHorizontal_bias="0.5"
@@ -80,7 +75,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="B"
+        android:text="@string/B_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/CBTN"
         app:layout_constraintHorizontal_bias="0.5"
@@ -92,7 +87,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="C"
+        android:text="@string/C_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/DBTN"
         app:layout_constraintHorizontal_bias="0.5"
@@ -104,7 +99,7 @@
         android:layout_height="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="D"
+        android:text="@string/D_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -117,7 +112,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="text view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answerDTXT" />

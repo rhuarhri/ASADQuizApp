@@ -17,9 +17,15 @@ public class studentQuizzes implements QuizDataBaseInterface {
     }
 
     @Override
-    public void getAllQuizzes(List<String> listOfQuizIDs, final RecyclerView QuizRV, boolean isLecture) throws Exception {
+    public void getQuiz(String name, boolean isLecturer, Context context) {
 
     }
+
+    @Override
+    public void getAllQuizzes(List<String> listOfQuizIDs, RecyclerView QuizRV, boolean isLecture, Context context) throws Exception {
+
+    }
+
 
     @Override
     public List<question> getAllQuestions(String quizDocumentId) throws Exception {

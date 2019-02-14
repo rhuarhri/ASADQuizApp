@@ -1,10 +1,14 @@
 package com.example.rhuarhri.asadquizapp.Logiclayer;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.rhuarhri.asadquizapp.CreateQuizActivity;
 import com.example.rhuarhri.asadquizapp.Databaselayer.QuizDataBase;
+import com.example.rhuarhri.asadquizapp.Databaselayer.studentQuizzes;
 import com.example.rhuarhri.asadquizapp.customDataTypes.question;
 import com.example.rhuarhri.asadquizapp.customDataTypes.quiz;
 
@@ -29,14 +33,43 @@ public class QuizManger implements  QuizMangerInterface{
 
 
     @Override
-    public void DisplayExistingQuiz(String name) {
+    public void DisplayExistingQuizzes(RecyclerView quizRV, boolean isLecturer, Context appContext) {
+
+
+        QuizDataBase QuizBD = new QuizDataBase();
+
+        if (isLecturer == true)
+        {
+            try {
+                QuizBD.getAllQuizzes(null, quizRV, true, appContext);
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
+        else
+        {
+            studentQuizzes getQuizzes = new studentQuizzes();
+            try {
+                QuizBD.getAllQuizzes(getQuizzes.getAllStudentsQuizzes(appContext), quizRV, false, appContext);
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
+
+
+
+
 
     }
 
     @Override
-    public String getQuizDocumentID() {
+    public void getQuiz(String name, boolean isLecturer, Context context) {
 
-        return QuizDB.getQuizDocumentID(IsNewQuiz, name);
+        QuizDB.getQuiz(name, isLecturer, context);
 
 
     }
@@ -101,12 +134,13 @@ public class QuizManger implements  QuizMangerInterface{
 
     private String checkForErrors(quiz checkQuiz)
     {
-        if(checkQuiz.getName() == "")
+        if(checkQuiz.getName().equals("") || checkQuiz.getName().isEmpty())
         {
+
             return "Name not added";
         }
 
-        if (checkQuiz.getDescription() == "")
+        if (checkQuiz.getDescription().equals("") || checkQuiz.getDescription().isEmpty())
         {
             return "Description not added";
         }

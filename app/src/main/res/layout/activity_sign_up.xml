@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:text="Add user name"
+        android:text="@string/add_user_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintStart_toStartOf="@+id/UserNameTXT"
         app:layout_constraintTop_toBottomOf="@+id/UserNameTXT" />
 
@@ -48,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Add password"
+        android:text="@string/add_password"
         app:layout_constraintStart_toStartOf="@+id/nameET"
         app:layout_constraintTop_toBottomOf="@+id/nameET" />
 
@@ -59,7 +58,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Password"
         app:layout_constraintStart_toStartOf="@+id/passwordTXT"
         app:layout_constraintTop_toBottomOf="@+id/passwordTXT" />
 
@@ -70,7 +68,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

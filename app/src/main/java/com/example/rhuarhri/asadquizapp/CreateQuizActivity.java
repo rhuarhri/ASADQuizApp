@@ -94,14 +94,22 @@ public class CreateQuizActivity extends AppCompatActivity {
 
         newQuiz.setDescription(quizDescription);
 
+
+
         String error = quizManger.add(newQuiz, null, getApplicationContext());
+
+
+
+
+
+
 
         if(error != "") {
             Toast.makeText(CreateQuizActivity.this, "ERROR: " + error, Toast.LENGTH_LONG).show();
         }
         else
         {
-            QuizID = quizManger.getQuizDocumentID();
+            //QuizID = quizManger.getQuizDocumentID();
         }
     }
 }

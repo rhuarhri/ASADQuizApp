@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.QuizDataBase;
+import com.example.rhuarhri.asadquizapp.Logiclayer.QuizManger;
 
 public class LectureHomeActivity extends AppCompatActivity {
 
@@ -30,15 +31,10 @@ public class LectureHomeActivity extends AppCompatActivity {
 
         questionListRV.setLayoutManager(questionListLM);
 
-        QuizDataBase QuizBD = new QuizDataBase();
 
-        try {
-            QuizBD.getAllQuizzes(null, questionListRV, true);
-        }
-        catch(Exception e)
-        {
+        QuizManger quizM = new QuizManger();
 
-        }
+        quizM.DisplayExistingQuizzes(questionListRV, true, getApplicationContext());
 
 
 
