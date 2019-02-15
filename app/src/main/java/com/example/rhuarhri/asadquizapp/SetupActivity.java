@@ -30,8 +30,8 @@ public class SetupActivity extends AppCompatActivity {
         studentBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goToStudentHomeScreen = new Intent(getApplicationContext(), StudentHomeActivity.class);
-                startActivity(goToStudentHomeScreen);
+                Intent goToStudentLogin = new Intent(getApplicationContext(), studentLoginActivity.class);
+                startActivity(goToStudentLogin);
             }
         });
     }

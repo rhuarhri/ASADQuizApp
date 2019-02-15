@@ -376,7 +376,7 @@ public class ExampleInstrumentedTest {
      */
 
     @Rule
-    public ActivityTestRule<AnswerQuizActivity> AnswerQuizAct = new ActivityTestRule<>(AnswerQuizActivity.class);
+    public ActivityTestRule<AnswerQuizActivity> StudentSignUPAct = new ActivityTestRule<>(AnswerQuizActivity.class);
 
     //a student must do this before starting a quiz
     @Test
@@ -384,27 +384,33 @@ public class ExampleInstrumentedTest {
     {
         //TODO change this test to remove the error
 
-        /*
+
         String name = "fred";
 
         String error = "";
         String expected = "";
 
-        user testUser = new user(name, null);
+        Espresso.onView(withId(R.id.usernameLogin)).perform(typeText(name));
 
-        UserDatabase userAddDB = new UserDatabase();
 
+        Espresso.onView(withId(R.id.btnLogin2)).perform(click());
+
+        /*
+        This pauses the test for 5 seconds giving the app time to check the data base
+         */
         try {
-            userAddDB.addUser(name, null);
-
-        }
-        catch(Exception e)
-        {
-            error = "failed to add";
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        assertEquals(expected, error);*/
+        Espresso.onView(withId(R.id.errorTXT)).check(matches(withText(expected)));
+
+
     }
+
+    @Rule
+    public ActivityTestRule<AnswerQuizActivity> AnswerQuizAct = new ActivityTestRule<>(AnswerQuizActivity.class);
 
     @Test
     public void answerQuestionCorrectly()

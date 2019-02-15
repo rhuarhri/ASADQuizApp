@@ -236,7 +236,7 @@ public class RunQuizDB implements QuizDataBaseInterface {
                                                 //answer correct
                                                 if(rightAnswerTXT != null) {
                                                     rightAnswerTXT.setText("correct");
-                                                    addScore("ted");
+                                                    addScore(playerName);
                                                 }
                                             } else {
                                                 //answer wrong

@@ -74,7 +74,7 @@ public class questionRVAdapter extends RecyclerView.Adapter<questionRVAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         holder.quizNameTXT.setText("" + FoundNames.get(position));
         if(FoundIsLiked.get(position) == true)
@@ -90,7 +90,7 @@ public class questionRVAdapter extends RecyclerView.Adapter<questionRVAdapter.Vi
             @Override
             public void onClick(View view) {
                 QuizManger quizM = new QuizManger();
-                quizM.getQuiz(holder.quizNameTXT.getText().toString(), true, context);
+                quizM.getQuiz(FoundNames.get(position), true, context);
             }
         });
 

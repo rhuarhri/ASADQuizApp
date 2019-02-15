@@ -51,6 +51,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         Bundle sentData = fromQRScanner.getExtras();
         if (sentData != null) {
             quizId = (String) sentData.get("id");
+            studentName = (String) sentData.get("name");
         }
 
         TimePB = findViewById(R.id.timerPB);

@@ -21,4 +21,5 @@
     <string name="create_quiz">Create Quiz</string>
     <string name="quiz_name">Quiz Name</string>
     <string name="quiz_description">Quiz description</string>
+    <string name="login">Login</string>
 </resources>

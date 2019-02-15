@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.rhuarhri.asadquizapp.LectureHomeActivity;
 import com.example.rhuarhri.asadquizapp.StudentHomeActivity;
+import com.example.rhuarhri.asadquizapp.customDataTypes.player;
 import com.example.rhuarhri.asadquizapp.customDataTypes.user;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -74,33 +75,35 @@ public class UserDatabase implements userDataBaseInterface {
     public void addUser(String name, String password) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        user addUser = new user(name, password);
+        user addUser = null;
+        player addplayer = null;
 
         CollectionReference colRef;
 
         if (password == "" || password == null) {
             //adding student
             //this ensures that no problems occur from inserting a null value
-            addUser = new user(name, "");
+            addplayer = new player(name, 0);
             colRef = db.collection("leaderboard");
 
         }
         else{
 
             //adding a lecture
+            addUser = new user(name, password);
             colRef = db.collection("user");
 
         }
 
 
-            checkIfNameExists(colRef, addUser);
+            checkIfNameExists(colRef, name, addUser, addplayer);
 
 
     }
 
-    private void checkIfNameExists(final CollectionReference colRef, final user addUser)
+    private void checkIfNameExists(final CollectionReference colRef, String name, final user addUser, final player addplayer)
     {
-        colRef.whereEqualTo("name", addUser.getUserName() )
+        colRef.whereEqualTo("name", name )
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
         @Override
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -108,7 +111,7 @@ public class UserDatabase implements userDataBaseInterface {
             {
                 //Name unique
                 try {
-                    addData(colRef, addUser);
+                    addData(colRef, addUser, addplayer);
                 }
                 catch(Exception e)
                 {
@@ -132,35 +135,57 @@ public class UserDatabase implements userDataBaseInterface {
     });
     }
 
-    private void addData(CollectionReference colRef, final user addUser) throws Exception
+    private void addData(CollectionReference colRef, final user addUser, final player addplayer) throws Exception
     {
         try {
-            colRef.add(addUser)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            //user added successfully
-                            errorTXT.setText("successful");
-                            if (addUser.getPassword() == "")
-                            {
-                                //student added
-                                Intent goToStudentHomeScreen = new Intent(context, StudentHomeActivity.class);
-                                context.startActivity(goToStudentHomeScreen);
-                            }
-                            else
-                            {
-                                //lecture added
-                                Intent goToLectureHomeScreen = new Intent(context, LectureHomeActivity.class);
-                                context.startActivity(goToLectureHomeScreen);
-                            }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
 
-                        }
-                    });
+            if (addUser == null)
+            {
+                colRef.add(addplayer)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                //user added successfully
+                                errorTXT.setText("successful");
+
+                                    //student added
+                                    Intent goToStudentHomeScreen = new Intent(context, StudentHomeActivity.class);
+                                    goToStudentHomeScreen.putExtra("name", addplayer.getName());
+                                    context.startActivity(goToStudentHomeScreen);
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+            }
+            else
+            {
+                colRef.add(addUser)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                //user added successfully
+                                errorTXT.setText("successful");
+
+                                    //lecture added
+                                    Intent goToLectureHomeScreen = new Intent(context, LectureHomeActivity.class);
+                                    context.startActivity(goToLectureHomeScreen);
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+            }
+
+
 
 
         } catch (Exception e) {

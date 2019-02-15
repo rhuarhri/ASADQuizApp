@@ -30,7 +30,8 @@
         <activity android:name=".studentAccessActivity" />
         <activity android:name=".LectureQuizManagerActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".quizResultsActivity"></activity>
+        <activity android:name=".quizResultsActivity" />
+        <activity android:name=".studentLoginActivity"></activity>
     </application>
 
 </manifest>

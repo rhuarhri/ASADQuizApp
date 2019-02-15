@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.rhuarhri.asadquizapp.Databaselayer.studentQuizzes;
 import com.example.rhuarhri.asadquizapp.Logiclayer.QuizManger;
@@ -22,10 +23,21 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
     RecyclerView studentRV;
     RecyclerView.LayoutManager studentLM;
 
+    String studentName = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_home);
+
+        Intent fromStudentLogin = getIntent();
+        Bundle sentData = fromStudentLogin.getExtras();
+        if (sentData != null) {
+
+            studentName = (String) sentData.get("name");
+        }
+
+        Toast.makeText(this, "Welcome " + studentName, Toast.LENGTH_SHORT).show();
 
         getAccessToQuizBTN = (Button) findViewById(R.id.getAccessToQuizBTN);
         testBTN = (Button) findViewById(R.id.testBTN);
@@ -49,6 +61,7 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
 
                 Intent goToAnswerQuizActivity = new Intent(getApplicationContext(), AnswerQuizActivity.class);
                 goToAnswerQuizActivity.putExtra("id", "EVEKNRGGP35kYsxh1za8");
+                goToAnswerQuizActivity.putExtra("name", studentName);
                 startActivity(goToAnswerQuizActivity);
             }
         });
@@ -78,6 +91,7 @@ public class StudentHomeActivity extends AppCompatActivity implements ZXingScann
 
         Intent goToAnswerQuizActivity = new Intent(getApplicationContext(), AnswerQuizActivity.class);
         goToAnswerQuizActivity.putExtra("id", result.getText());
+        goToAnswerQuizActivity.putExtra("name", studentName);
         startActivity(goToAnswerQuizActivity);
     }
 }
